@@ -1,0 +1,27 @@
+body 
+{
+    margin: 0;
+    padding: 0;
+    background-color: #FF8615;
+}
+
+.header
+{
+    height: 3em;
+    padding: 10px 50px;
+    width: 100%;
+    background-color: white;
+
+    display: inline-flex;
+}
+
+.header > *
+{
+    padding: 0px 10px;
+}
+
+.header > button
+{
+    position: relative;
+    float: left;
+}
