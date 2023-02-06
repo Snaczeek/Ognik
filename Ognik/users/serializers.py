@@ -1,8 +1,33 @@
 from rest_framework.serializers import ModelSerializer 
-from .models import MessageTest
+from rest_framework import serializers 
+from .models import Message, FriendList, FriendRoom
+from django.contrib.auth.models import User
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "id"]
+
 
 class MessageSerializer(ModelSerializer):
+    user = UserSerializer()
     class Meta:
-        model = MessageTest
+        model = Message
         fields = '__all__'
 
+class FriendSerialiazer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "id"]
+
+class FriendListSerialiazer(ModelSerializer):
+    friends = FriendSerialiazer(many = True)
+    class Meta:
+        model = FriendList
+        fields = ["user", "friends"]
+
+class FriendRoomSerialiazer(ModelSerializer):
+    user = UserSerializer(many = True)
+    class Meta:
+        model = FriendRoom
+        fields = "__all__"
