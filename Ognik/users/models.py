@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models import Q 
 
 # Create your models here.
 class FriendList(models.Model):
@@ -90,8 +91,8 @@ class FriendRoom(models.Model):
     name = models.TextField()
 
     # Utils function that returns room with contained passed users id's
-    def ReturnCorrectRoom(user, friendName):
-        room = FriendRoom.objects.filter(users__in=[user and friendName])
+    def ReturnCorrectRoom(user, friendName):  
+        room = FriendRoom.objects.filter(users__id = user).filter(users__id = friendName) # returns every room with user id, then in those filtred rooms, returns only room with friendName id
         return room
 
 

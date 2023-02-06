@@ -27,7 +27,7 @@ class FriendListSerialiazer(ModelSerializer):
         fields = ["user", "friends"]
 
 class FriendRoomSerialiazer(ModelSerializer):
-    user = UserSerializer(many = True)
+    users = UserSerializer(many = True)
     class Meta:
         model = FriendRoom
         fields = "__all__"

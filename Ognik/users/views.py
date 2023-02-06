@@ -67,7 +67,7 @@ def getFriendList(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getRoomMessages(request, friendName):
-    # user = authenticate(username="admin", password="qwe1@3") ~~ debuging stuff
+    # user = authenticate(username="Snaczek", password="qwerty1@3") ~~ debuging stuff
     user = request.user
     try:
         friend_object = User.objects.get(username=friendName)
