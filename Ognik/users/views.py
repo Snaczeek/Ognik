@@ -65,7 +65,7 @@ def getFriendList(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getRoomMessages(request, friendName):
     # user = authenticate(username="admin", password="qwe1@3") ~~ debuging stuff
     user = request.user

@@ -9,16 +9,13 @@ const MessageContainer = () => {
 
   let [messages, setMessages] = useState([])
   let {authToken, logoutUser} = useContext(AuthContext)
-
-  // functions 'useEffect()' trigges on the first load 
+  
+  // functions 'useEffect()' trigges on the first load
+  // and every time 'username' is updated 
   useEffect(() => {
     getMessages()
-  }, [])
-
-  function refreshPage() {
-    window.location.reload(false);
-  }
-
+  }, [username])
+  
   // getting messages form django backend
   let getMessages = async () => {
     let respone = await fetch('http://localhost:8000/users/rooms/'+string, {
@@ -28,15 +25,16 @@ const MessageContainer = () => {
         'Authorization':'Bearer ' + String(authToken.access)
       }
     }, [])
-
+    
     let data = await respone.json()
     console.log(data)
     setMessages(data)
   }
+  
 
   return (
     <div className='message_container'>
-      <h1 onClick={refreshPage}>{username}</h1>
+      <h1>{username}</h1>
       <ul>
         {messages.map(f => (
             <div key={f.id}className='friends_elem'>{f.user.username}: {f.body}</div>
