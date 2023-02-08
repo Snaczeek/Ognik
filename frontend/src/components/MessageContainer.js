@@ -31,6 +31,24 @@ const MessageContainer = () => {
     setMessages(data)
   }
   
+  let sendMessage = async (e) => {
+    e.preventDefault()
+    let respone = await fetch('http://localhost:8000/users/rooms/send/'+string, {
+      method: 'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authToken.access)
+      }, 
+      body:JSON.stringify(e.target.message.value)
+    })
+    document.getElementById('mess').value = ''
+    getMessages()
+  }
+
+  setTimeout(() => {
+    const input = document.getElementById("mess");
+    input.focus();
+    }, 10);
 
   return (
     <div className='message_container'>
@@ -41,8 +59,10 @@ const MessageContainer = () => {
         ))}
       </ul>
       <div className='message_text_input'>
-        <input type="text"></input>
-        <button>Send</button>
+        <form onSubmit={sendMessage}>
+          <input type="text" id='mess' name="message" />
+          <button type="submit">Send</button>
+        </form>
       </div>
       
     </div>

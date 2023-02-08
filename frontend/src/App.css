@@ -156,3 +156,10 @@ body
 {
     width: 80%;
 }
+
+.message_container ul  
+{
+    height: 85vh;
+    overflow:hidden; 
+    overflow-y:scroll;
+}

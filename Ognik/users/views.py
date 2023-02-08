@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -86,3 +86,22 @@ def getRoomMessages(request, friendName):
     m_serializer = MessageSerializer(rooms_messages, many=True)
     # Returnig all data
     return Response(m_serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def sendMessage(request, friendName):
+    # user = authenticate(username="Snaczek", password="qwerty1@3")
+    user = request.user
+    try:
+        friend_object = User.objects.get(username=friendName)
+    except Exception:
+        return HttpResponse("user doesn't exist")
+    
+    try:
+        rooms = FriendRoom.objects.filter(users__id = user.id).filter(users__id = friend_object.id).get()
+    except Exception:
+        return HttpResponse("Room doesn't exist")
+    
+    message = Message(user = user, room = rooms, body = request.data)
+    message.save()
+    return HttpResponse("it did work")

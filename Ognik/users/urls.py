@@ -11,6 +11,7 @@ urlpatterns = [
     path('messages/<str:username>', views.getMessages),
     path('friends/', views.getFriendList),
     path('rooms/<str:friendName>', views.getRoomMessages),
+    path('rooms/send/<str:friendName>', views.sendMessage),
 
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
