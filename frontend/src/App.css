@@ -136,7 +136,7 @@ body
 .main_container
 {
     width: 85%;
-    background-color: aqua;
+    background-color: rgb(158, 53, 53);
 }
 
 .message_text_input

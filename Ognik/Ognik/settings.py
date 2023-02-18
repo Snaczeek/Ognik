@@ -26,12 +26,16 @@ SECRET_KEY = 'django-insecure--mel4u*l1m9i6*j4uvoq-z@zo1gi676)z1#rfo(6g@*1jskqjd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Allowed aplication for asgi 
+# For deploment use domain
+ALLOWED_HOSTS = ["http://192.168.8.122:3000", "http://localhost:3000", "http://localhost:8000", "localhost"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,8 +132,18 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'Ognik.wsgi.application'
 
+ASGI_APPLICATION = 'Ognik.asgi.application'
+
+# This is for testing only
+# For deployment change this to redis
+CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels.layers.InMemoryChannelLayer'
+        }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

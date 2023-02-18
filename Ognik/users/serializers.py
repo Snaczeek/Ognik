@@ -31,3 +31,8 @@ class FriendRoomSerialiazer(ModelSerializer):
     class Meta:
         model = FriendRoom
         fields = "__all__"
+
+class FriendRoomSerialiazerForConsume(ModelSerializer):
+    class Meta:
+        model = FriendRoom
+        fields = ["name"]

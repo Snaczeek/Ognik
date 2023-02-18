@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom'
+import { w3cwebsocket as W3CWebSocket} from 'websocket';
 
 const AuthContext = createContext();
 
@@ -13,10 +14,18 @@ export const AuthProvider = ({children}) => {
     let [authToken, setAuthTokens] = useState(() => localStorage.getItem('authToken') ? JSON.parse(localStorage.getItem('authToken')) : null)
     // decoding jwt token into useable block
     let [user, setUser] = useState(() => localStorage.getItem('authToken') ? jwt_decode(localStorage.getItem('authToken')) : null)
+
+
     let [loading, setLoading] = useState(true)
 
-    const navigate = useNavigate()
 
+    let url = `ws://localhost:8000/ws/socket-server/`
+    let [WebSocket, setWebSocket] = useState(() => localStorage.getItem('authToken') ? new W3CWebSocket(url + "?token=" + String(authToken.access)) : null)
+    
+  
+    
+    const navigate = useNavigate()
+    
     // login function
     let loginUser = async (e ) => {
         e.preventDefault()
@@ -29,15 +38,18 @@ export const AuthProvider = ({children}) => {
             body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
         })
         let data = await response.json()
-
+        
         // if response form django is positive 
         // saving token data to browser storage (at this point user is logged)
         if(response.status === 200)
         {
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
+            if (!WebSocket){
+                setWebSocket(new W3CWebSocket(url + "?token=" + String(data.access)))
+            }
             localStorage.setItem('authToken', JSON.stringify(data))
-            navigate('/test')
+            navigate('/test')               
         }
         else
         {
@@ -49,6 +61,7 @@ export const AuthProvider = ({children}) => {
     let logoutUser = () => {
         setAuthTokens(null)
         setUser(null)
+        
         // clearing users web storage
         localStorage.removeItem('authToken')
         navigate('/')
@@ -89,6 +102,7 @@ export const AuthProvider = ({children}) => {
         authToken:authToken,
         loginUser:loginUser,
         logoutUser: logoutUser,
+        WebSocket:WebSocket
     }
 
     useEffect(() => {
