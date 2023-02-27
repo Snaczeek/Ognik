@@ -1,4 +1,5 @@
 import './App.css';
+import homeCSS from './styles/home.module.css';
 import Header from './components/Header';
 import AuthContext, { AuthProvider } from './context/AuthContext';
 
@@ -15,19 +16,21 @@ function App() {
 
 
   return (
-    <div className="App">
+    <>
+      {/* <div className={homeCSS.flex_container}> */}
       <Router>
         <AuthProvider>
           <Routes>
-            <Route element={<HomePage />} path="/"/>
-            <Route element={<LoginPage />} path="/login"/>
+            <Route element={<HomePage />} path="/" />
+            <Route element={<LoginPage />} path="/login" />
             <Route element={<ProtectedRoute />}>
               <Route path='/test/*' element={<MainApp />} />
             </Route>
           </Routes>
         </AuthProvider>
       </Router>
-    </div>
+      {/* </div> */}
+    </>
   );
 }
 

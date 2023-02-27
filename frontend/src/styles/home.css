@@ -1,0 +1,29 @@
+@font-face {
+    font-family: Renogare;
+    src: url('./../assets/font/Renogare.ttf');
+}
+
+:root {
+    --logo-orange: #ff7640;
+    --logo-yellow: #ffc903;
+    --logo-lightblue: #379aff;
+    --logo-lighterblue: #48c5ff;
+}
+
+body {
+    background: url("./../img/fireBgTrans.png");
+    background-size: 100%;
+    background-position: 0 -200px;
+    backdrop-filter: blur(2px);
+}
+
+
+a:visited {
+    color: white;
+}
+
+
+
+.account_btn {
+    margin: 1em;
+}

@@ -1,0 +1,143 @@
+/* @import url('./home.css'); */
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    height: 100vh;
+
+}
+
+nav {
+    width: 75%;
+    margin: 2rem 0 0 0;
+    padding: 0 0 2rem 0;
+    border-bottom: 3px solid white;
+}
+
+
+
+section.header {
+    display: grid;
+    grid-template-columns: auto 3fr auto;
+    justify-items: center;
+    align-items: center;
+    font-size: 0.58vw;
+    /* font-size: 0.7em; */
+}
+
+.header_logo {
+    font-family: Renogare;
+}
+
+.header_logo>a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.3em;
+}
+
+.logo_text {
+    font-size: 4.8em;
+    text-transform: uppercase;
+    margin: 0 0 0 0.1em;
+    letter-spacing: 0.02em;
+    background: linear-gradient(0deg, var(--logo-lighterblue) 10%, var(--logo-lightblue) 80%);
+    color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    transform: translateY(0.1em);
+}
+
+.container {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    text-transform: capitalize;
+    font-weight: bolder;
+
+}
+
+.nav_links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+/* .nav_links>a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+} */
+
+.nav_links>a {
+    padding: 0.5em 0.7em;
+    margin: 0 0.5em;
+    font-size: 2em;
+    text-transform: uppercase;
+    border-radius: 25px;
+    color: white;
+
+
+}
+
+.logo_img {
+    width: 7em;
+}
+
+.flex_container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.git_svg,
+.nav_links>a {
+    transition: 200ms;
+}
+
+.git_svg:hover {
+    filter: drop-shadow(0px 0px 10px var(--logo-lightblue));
+}
+
+.nav_links>a:hover:not(:last-child) {
+    /* filter: drop-shadow(0px 0px 8px var(--logo-lightblue)); */
+    box-shadow: var(--logo-lightblue) 0 0 10px;
+    box-shadow: inset 0 0 10px var(--logo-lightblue),
+        0 0 10px var(--logo-lightblue);
+}
+
+.account_btn {
+    display: flex;
+
+}
+
+.account_btn>div {
+    margin: 0 2em;
+}
+
+
+.header_btn {
+    min-width: 8em;
+    padding: 0.6em 0;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.6em;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    background: transparent;
+    color: white;
+    border: 2px solid hsl(0, 0%, 100%);
+    transition: 300ms;
+}
+
+.header_btn:hover {
+    /* background: hsl(0, 0%, 22%);
+    box-shadow: white 0 0 2px;
+    color: var(--logo-lightblue); */
+    box-shadow: inset 0 0 10px var(--logo-lightblue),
+        0 0 10px var(--logo-lightblue);
+}

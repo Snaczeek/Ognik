@@ -1,12 +1,10 @@
-body 
-{
+body {
     margin: 0;
     padding: 0;
     background-color: #FF8615;
 }
 
-.header
-{
+.header {
     height: 3em;
     padding: 10px 50px;
     width: 100%;
@@ -15,77 +13,69 @@ body
     display: inline-flex;
 }
 
-.header > *
-{
+.header>* {
     padding: 0px 10px;
 }
 
-.header > button
-{
+.header>button {
     position: relative;
     float: left;
 }
 
-.ChannelListContainer
-{
+.git_logo {}
+
+.ChannelListContainer {
     display: inline-flex;
     width: 18.5rem;
     background-color: #36393e;
 }
 
-.sidebar
-{
+.sidebar {
     width: 25%;
     background-color: #1e2124;
     height: 100%;
 }
 
 /* home icon */
-.sidebar_home-icon
-{
+.sidebar_home-icon {
     padding: 10px;
 }
 
-.home-icon_inner
-{
+.home-icon_inner {
     background-color: #424549;
     border-radius: 30px;
     transition: background-color 0.2s ease;
     transition: border-radius 0.2s ease;
 }
 
-.home-icon_inner:hover
-{
+.home-icon_inner:hover {
     background-color: #FF8615;
     border-radius: 15px;
 }
-.home-icon_inner img 
-{
+
+.home-icon_inner img {
     width: 100%;
     padding-top: 3px;
 }
 
 /* logout icon */
-.sidebar_logout-icon
-{
+.sidebar_logout-icon {
     padding: 10px;
 }
 
-.logout-icon_inner
-{
+.logout-icon_inner {
     background-color: #424549;
     border-radius: 30px;
     transition: background-color 0.2s ease;
     transition: border-radius 0.2s ease;
 }
 
-.logout-icon_inner:hover
-{
+.logout-icon_inner:hover {
     background-color: #FF8615;
     border-radius: 15px;
 }
-.logout-icon_inner img 
-{
+
+.logout-icon_inner img {
     width: 75%;
     padding-top: 9px;
     padding-left: 9px;
@@ -93,8 +83,7 @@ body
 
 /* Main app */
 
-.MainApp
-{
+.MainApp {
     height: 100vh;
     width: 100%;
     display: inline-flex;
@@ -102,20 +91,17 @@ body
 
 /* friends list */
 
-.friends_list
-{
+.friends_list {
     width: 75%;
 }
 
-.friends_list_title
-{
+.friends_list_title {
     text-align: center;
     padding: 1em;
-    color: 	#a8aeb8;
+    color: #a8aeb8;
 }
 
-.friends_elem
-{
+.friends_elem {
     margin: 0.3125em 0.9375em;
     padding-left: 0.625em;
     padding-right: 0.625em;
@@ -123,43 +109,37 @@ body
     height: 2em;
     width: auto;
     text-align: left;
-    color: 	#a8aeb8;
+    color: #a8aeb8;
     font-size: 1.1em;
     border-radius: 7px;
 }
 
-.friends_elem:hover
-{
+.friends_elem:hover {
     background-color: #424549;
 }
 
-.main_container
-{
+.main_container {
     width: 85%;
     background-color: aqua;
 }
 
-.message_text_input
-{
+.message_text_input {
     width: 80%;
 }
 
-.message_text_input
-{
+.message_text_input {
     position: fixed;
     bottom: 0;
     width: 100%;
     padding: 10px;
 }
 
-.message_text_input input
-{
+.message_text_input input {
     width: 80%;
 }
 
-.message_container ul  
-{
+.message_container ul {
     height: 85vh;
-    overflow:hidden; 
-    overflow-y:scroll;
+    overflow: hidden;
+    overflow-y: scroll;
 }
