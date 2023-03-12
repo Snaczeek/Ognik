@@ -11,6 +11,7 @@ export const FriendList = () => {
 
   return (
     <div className='friends_list'>
+      <Link to={"./addFriend"}><div className='add_friend_div'>Add Friend</div></Link>
       <div className='friends_list_title'>Friends list</div>
         {friends.map(f => (
             <Link to={"./mcon/"+f} ><div key={i++}className='friends_elem'>{f}</div></Link>

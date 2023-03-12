@@ -8,23 +8,34 @@ const AuthContext = createContext();
 export default AuthContext
 
 export const AuthProvider = ({children}) => {
-
+    
     // Checking if user has token in browser storage
     // if so then, parsing value into json format
     let [authToken, setAuthTokens] = useState(() => localStorage.getItem('authToken') ? JSON.parse(localStorage.getItem('authToken')) : null)
     // decoding jwt token into useable block
     let [user, setUser] = useState(() => localStorage.getItem('authToken') ? jwt_decode(localStorage.getItem('authToken')) : null)
-
-
+    
+    
     let [loading, setLoading] = useState(true)
-
-
+    
+    
     let url = `ws://localhost:8000/ws/socket-server/`
     let [WebSocket, setWebSocket] = useState(() => localStorage.getItem('authToken') ? new W3CWebSocket(url + "?token=" + String(authToken.access)) : null)
     
-  
-    
     const navigate = useNavigate()
+    
+    // Must be in try block 
+    // Because on first load Websocket ist set to NULL so .onclose property doesn't exist 
+    try{
+        // If Websocket connection was interruptedly closed
+        // Refresh page 
+        WebSocket.onclose = () => {
+            console.log("AuthContext: Websocket Closed")
+            window.location.reload();
+        }
+    }catch(e){
+    
+    }
     
     // login function
     let loginUser = async (e ) => {
@@ -56,7 +67,7 @@ export const AuthProvider = ({children}) => {
             alert("Hujnia z grzybami")
         }
     }
-
+    
     // logout function
     let logoutUser = () => {
         setAuthTokens(null)
@@ -66,7 +77,7 @@ export const AuthProvider = ({children}) => {
         localStorage.removeItem('authToken')
         navigate('/')
     }
-
+    
     // updating access token
     let updateToken = async () => {
         // fetching refresh token to django backend
@@ -90,12 +101,12 @@ export const AuthProvider = ({children}) => {
         {
             logoutUser()
         }
-
+        
         if(loading){
             setLoading(false)
         }
     }
-
+    
     // context data for provider
     let contextData = {
         user:user,
@@ -104,15 +115,16 @@ export const AuthProvider = ({children}) => {
         logoutUser: logoutUser,
         WebSocket:WebSocket
     }
-
+    
     useEffect(() => {
-
+   
+        
         // before children are rendered 
         // update token
         if(loading){
             updateToken()
         }
-
+        
         // run updateToken() every 4 minutes
         let s4Minutes = 1000 * 60 * 4
         let interval = setInterval(() => {
@@ -121,12 +133,13 @@ export const AuthProvider = ({children}) => {
             }
         }, s4Minutes)
         return ()=> clearInterval(interval)
-
-    }, [authToken, loading])
+        
+    }, [authToken, loading, WebSocket])
+    
 
     // returnig contex data for children
     return (
-    <AuthContext.Provider value={contextData}>
+        <AuthContext.Provider value={contextData}>
         {/* render children after loading is done */}
         {loading ? null : children}
     </AuthContext.Provider>

@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer 
 from rest_framework import serializers 
-from .models import Message, FriendList, FriendRoom
+from .models import Message, FriendList, FriendRoom, FriendRequest
 from django.contrib.auth.models import User
 
 class UserSerializer(ModelSerializer):
@@ -15,13 +15,8 @@ class MessageSerializer(ModelSerializer):
         model = Message
         fields = '__all__'
 
-class FriendSerialiazer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = ["username", "id"]
-
 class FriendListSerialiazer(ModelSerializer):
-    friends = FriendSerialiazer(many = True)
+    friends = UserSerializer(many = True)
     class Meta:
         model = FriendList
         fields = ["user", "friends"]
@@ -36,3 +31,10 @@ class FriendRoomSerialiazerForConsume(ModelSerializer):
     class Meta:
         model = FriendRoom
         fields = ["name"]
+
+class FriendRequestSerialiazer(ModelSerializer):
+    sender = UserSerializer()
+    receiver = UserSerializer()
+    class Meta:
+        model = FriendRequest
+        fields = "__all__"

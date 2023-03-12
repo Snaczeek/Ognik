@@ -9,7 +9,15 @@ export default FriendContext
 
 export const FriendProvider = ({children}) => {
     let [friends, setFriends] = useState([])
-    let {authToken} = useContext(AuthContext)   
+    let {authToken, WebSocket} = useContext(AuthContext)   
+
+    WebSocket.onmessage = (e) => {
+        let data = JSON.parse(e.data)
+        if(data.type === "friendRequest")
+        {
+            getFriends()
+        }
+    }
 
     let getFriends = async () =>{
         let response = await fetch('http://localhost:8000/users/friends/', {

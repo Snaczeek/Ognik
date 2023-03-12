@@ -72,7 +72,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     
     # Blacklists old refresh token
-    'BLACKLIST_AFTER_ROTATION': True,
+    'BLACKLIST_AFTER_ROTATION': False,
 
     'UPDATE_LAST_LOGIN': False,
 

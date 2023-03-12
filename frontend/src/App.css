@@ -5,6 +5,11 @@ body
     background-color: #FF8615;
 }
 
+a
+{
+    text-decoration: none;
+}
+
 .header
 {
     height: 3em;
@@ -30,7 +35,7 @@ body
 {
     display: inline-flex;
     width: 18.5rem;
-    background-color: #36393e;
+    background-color: #282b30;
 }
 
 .sidebar
@@ -45,6 +50,31 @@ body
 {
     padding: 10px;
 }
+
+.sidebar_FriendRequestIcon-icon
+{
+    padding: 10px;
+}
+
+.red_circle
+{
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    left: 2em;
+    top: -1em;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: hsl(0, 100%, 50%, 70%);
+    text-align: center;
+}
+
+.sidebar_FriendRequestIcon-icon img
+{
+    max-width: 90%;
+    height: auto;
+} 
 
 .home-icon_inner
 {
@@ -162,4 +192,124 @@ body
     height: 85vh;
     overflow:hidden; 
     overflow-y:scroll;
+}
+
+.add_friend_div
+{
+    background-color: rgba(55, 202, 116, 0.548);
+    border-radius: 5px;
+    width: 50%;
+    text-align: center;
+    padding: 5px;
+    margin-left: 12.5%;
+    margin-top: 7%;
+    width: 75%;
+    color: rgba(255, 255, 255, 0.726);
+    transition: background-color 0.2s ease;
+}
+
+.add_friend_div:hover
+{
+    background-color: rgba(55, 202, 116);
+    color: white;
+}
+
+.friendadd_container
+{
+    background-color: #36393e;
+    width: 100%;
+    height: 100vh;
+}
+
+.friendadd_container hr
+{
+    height: 1px;
+    background-color: grey;
+    border: none;
+}
+
+.friend_search input[type=text]
+{
+    background-color: #1e2124;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: black;
+    width: 40em;
+    height: 30px;
+    color: white;
+    text-align: left;
+    padding-right: 150px;
+}
+
+.friend_search input[type=text]:focus
+{
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #FF8615;
+    outline: none;
+}
+
+.friend_search button
+{
+    margin-left: -70px;
+    background-color: rgba(55, 202, 116, 0.548);
+    text-align: center;
+    border-radius: 5px;
+    border-color: rgba(0, 0, 0, 0);
+    color: rgba(255, 255, 255, 0.726);
+}
+
+.friend_header_container
+{
+    padding: 1em;
+}
+
+.friend_header_container
+{
+    color: #d9e0eb;
+}
+
+.friendadd_list
+{
+    padding: 0;
+    overflow-y: hidden;
+    overflow-y: scroll;
+    height: 70vh;
+}
+
+.friend_container p1
+{
+    padding: 20px; 
+}
+
+.friend_container hr
+{
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.friend_container button
+{
+    float: right;
+    margin-right: 50px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    background-color: rgba(55, 202, 116, 0.548);
+    text-align: center;
+    border-radius: 5px;
+    border-color: rgba(0, 0, 0, 0);
+    color: rgba(255, 255, 255, 0.726);
+    transition: background-color 0.2s ease;
+}
+
+.friend_container button:hover
+{
+    background-color: rgba(55, 202, 116);
+    color: white;
+}
+
+.friendrequest_container
+{
+    background-color: #36393e;
+    height: 100vh;
 }

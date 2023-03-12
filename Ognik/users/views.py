@@ -12,9 +12,9 @@ from django.contrib.auth import authenticate
 
 from django.shortcuts import get_object_or_404
 
-from .serializers import MessageSerializer, FriendListSerialiazer, FriendRoomSerialiazer
-from .models import FriendRoom, Message
-from django.db.models import Q
+from .serializers import MessageSerializer, FriendListSerialiazer, FriendRoomSerialiazer, UserSerializer, FriendRequestSerialiazer
+from .models import FriendRoom, Message, FriendRequest
+from django.db.models import QuerySet
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -105,3 +105,98 @@ def sendMessage(request, friendName):
     message = Message(user = user, room = rooms, body = request.data)
     message.save()
     return HttpResponse("it did work")
+
+@api_view(['GET'])
+def getUser(request, username):
+    user = request.user
+    # Getting queryset of serched users (based on username param) excluding requesting user's account
+    user_list = User.objects.filter(username__icontains=username).exclude(id=user.id)
+
+    # Serialaizing queryset into json formt
+    serialiazer = UserSerializer(user_list, many=True)
+    return Response(serialiazer.data)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def createFriendRequest(request, friendName):
+    friend = User.objects.get(username=friendName)
+    response = {}
+    response['type'] = "friendRequest"
+
+    try:
+        sender = FriendRequest.objects.get(sender__id = request.user.id, receiver__id = friend.id)
+    except Exception:
+        sender = FriendRequest.objects.filter(sender__id = request.user.id).filter(receiver__id = friend.id)
+    try:
+        receiver = FriendRequest.objects.get(sender__id = friend.id,receiver__id = request.user.id)
+    except Exception:
+        receiver = FriendRequest.objects.filter(sender__id = request.user.id).filter(receiver__id = friend.id)
+    # If friendRequest already exist
+    if sender or receiver:
+        if not isinstance(sender, QuerySet):
+            if sender.is_active == True:
+                print("exist")
+                response['status'] = "already exist"
+                return Response(response)
+            else:
+                sender.is_active = True
+                sender.save()
+                print("re sent request")
+                response['status'] = "re sent request"
+                return Response(response)
+            
+        if not isinstance(receiver, QuerySet):
+            if receiver.is_active == True:
+                print("exist")
+                response['status'] = "already exist"
+                return Response(response)
+            else:
+                receiver.is_active = True
+                receiver.save()
+                print("re sent request")
+                response['status'] = "re sent request"
+
+    friendRequest = FriendRequest(sender = request.user, receiver = friend)
+    friendRequest.save()
+    
+    response['status'] = "sended"
+    return Response(response)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def acceptFriendRequest(request, friendName):
+    
+    # Getting friend object
+    friend = User.objects.get(username=friendName)
+
+    # Getting friendRequest object and accepting it
+    friendRequest = FriendRequest.objects.get(sender__id = friend.id, receiver__id = request.user.id)
+    friendRequest.accept()
+
+    # Checking if chatroom already exist between those users
+    room = FriendRoom.objects.filter(users__id = request.user.id).filter(users__id = friend.id).get()
+    if not room:
+        # Creating Chatroom between users 
+        friendroom = FriendRoom.objects.create(name=f"{request.user.username}_{friend.username}") 
+        friendroom.users.add(friend)
+        friendroom.users.add(request.user)
+    
+    return HttpResponse("wotk")
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def declineFriendRequest(request, friendName):
+    friend = User.objects.get(username=friendName)
+    friendRequest = FriendRequest.objects.get(sender__id = friend.id, receiver__id = request.user.id)
+    friendRequest.is_active = False
+    friendRequest.save()
+    print("wokrk")
+    return HttpResponse("worky")
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getFriendRequest(requst):
+    friendRequst = FriendRequest.objects.filter(receiver__id = requst.user.id).exclude(is_active = False)
+    serializer = FriendRequestSerialiazer(friendRequst, many = True)
+
+    return Response(serializer.data)

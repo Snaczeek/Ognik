@@ -11,35 +11,38 @@ const MessageContainer = () => {
   let [messages, setMessages] = useState([])
   let { WebSocket, authToken} = useContext(AuthContext)
   
+
   // functions 'useEffect()' trigges on the first load
   // and every time 'username' is updated 
   useEffect(() => {
-    // Connecting to django web socket 
-    // Passing url with acces token for jwt auth
     getMessages()
-    WebSocket.onopen = () => {
-      console.log('WebSocket Client Connected');
-    }
-    // Listener for upcoming messages from django
-    // I dont think async is required, but who knows 
-    WebSocket.onmessage = function (e) {
-      let data = JSON.parse(e.data)
-      // Console logging messages for debugging
-      console.log('Data:', data)
-      // If user recives chat_update prompt and is from friend 
-      // whos chatroom is open: update messages 
-      if(data.type === 'chat_update' && data.friend === string){
-        console.log('chat')
-        // 100ms delay is required, for some bizarre reasons
-        // if there is no delay, getMessages() works every 3rd time
-        setTimeout(() => {
-          getMessages()
-        }, 100);
-      }
-    }
     
   }, [username])
   
+  WebSocket.onclose = () => {
+    console.log("Websocket Client Disconnected");
+  }
+
+  WebSocket.onopen = () => {
+    console.log('WebSocket Client Connected');
+  }
+  // Listener for upcoming messages from django
+  // I dont think async is required, but who knows 
+  WebSocket.onmessage = function (e) {
+    let data = JSON.parse(e.data)
+    // Console logging messages for debugging
+    // console.log('Data:', data)
+    // If user recives chat_update prompt and is from friend 
+    // whos chatroom is open: update messages 
+    if(data.type === 'chat_update' && data.friend === string){
+      // console.log('chat')
+      // 100ms delay is required, for some bizarre reasons
+      // if there is no delay, getMessages() works every 3rd time
+      setTimeout(() => {
+        getMessages()
+      }, 100);
+    }
+  }
   // Getting messages form django backend
   let getMessages = async () => {
     let respone = await fetch('http://localhost:8000/users/rooms/'+string, {
@@ -51,7 +54,7 @@ const MessageContainer = () => {
     }, [])
     
     let data = await respone.json()
-    console.log(data)
+    // console.log(data)
     setMessages(data)
   }
   
@@ -63,6 +66,7 @@ const MessageContainer = () => {
     WebSocket.send(JSON.stringify({
       'message': 'message was sent',
       'friendName': string,
+      'type': 'message_update',
     }))
     await fetch('http://localhost:8000/users/rooms/send/'+string, {
       method: 'POST',
@@ -92,7 +96,7 @@ const MessageContainer = () => {
         ))}
       </ul>
       <div className='message_text_input'>
-        <form onSubmit={sendMessage}>
+        <form onSubmit={sendMessage} autoComplete="off">
           <input type="text" id='mess' name="message" />
           <button type="submit">Send</button>
         </form>

@@ -85,6 +85,7 @@ class FriendRequest(models.Model):
         self.save()
 
 class FriendRoom(models.Model):
+    id = models.AutoField(primary_key=True)
     # Referencing users participating in the room
     users = models.ManyToManyField(User, related_name='users')
     # Room's name
