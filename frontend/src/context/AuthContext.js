@@ -24,6 +24,8 @@ export const AuthProvider = ({children}) => {
     
     const navigate = useNavigate()
     
+
+
     // Must be in try block 
     // Because on first load Websocket ist set to NULL so .onclose property doesn't exist 
     try{

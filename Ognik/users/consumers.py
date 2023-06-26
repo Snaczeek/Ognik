@@ -30,7 +30,7 @@ class ChatConsumer(WebsocketConsumer):
         y = 0
         for _ in serializer.data:
             # debuging stuff
-            # print(serializer.data[y].get('name'))
+            # print("test " + serializer.data[y].get('name'))
 
             # Setting group name based on chatroom name
             self.room_group_name = serializer.data[y].get('name')
@@ -57,8 +57,8 @@ class ChatConsumer(WebsocketConsumer):
 
         # Getting friend object
         # (Getting correct chatroom requires user id and friend id)
-        print(text_data_json['type'])   
-        print("test")   
+        # print(text_data_json['type'])   
+        # print("test")   
 
 
         # !!! Checking message type
@@ -71,10 +71,11 @@ class ChatConsumer(WebsocketConsumer):
                 # assigned to friend_object account with no friends and no messages
                 # so that django wont throw any errors and function returns only user's messages
                 friend_object = authenticate(username="no_friends_object", password="qwerty1@3")
+                print("no friend")
             
             # Getting correct room based on friend and user account
             rooms = FriendRoom.ReturnCorrectRoom(self.scope["user"].id, friend_object.id)
-            print(rooms[0].name)
+            # print(rooms[0].name)
             async_to_sync(self.channel_layer.group_send)(
                 # Sending message to correct group based on chatroom name
                 rooms[0].name,
@@ -91,6 +92,99 @@ class ChatConsumer(WebsocketConsumer):
             
             # Sending Friend request to friend
             self.send_friend_request(text_data_json['friendName'])
+        elif text_data_json['type'] == "init_call":
+            # Logic for exchanging ice candidates here
+            try:
+                friend_object = User.objects.get(username=text_data_json['friendName'])
+            except Exception:
+                # if friend_object was not found
+                # assigned to friend_object account with no friends and no messages
+                # so that django wont throw any errors and function returns only user's messages
+                friend_object = authenticate(username="no_friends_object", password="qwerty1@3")
+            
+            # Getting correct room based on friend and user account
+            rooms = FriendRoom.ReturnCorrectRoom(self.scope["user"].id, friend_object.id)
+            # print(rooms[0].name)
+            async_to_sync(self.channel_layer.group_send)(
+                # Sending message to correct group based on chatroom name
+                rooms[0].name,
+                {
+                    'type': 'init_call',
+                    'message': text_data_json['message'],
+                    'chatroom': rooms[0].name,
+                    'friend': self.scope["user"].username
+                }
+            )
+        elif text_data_json['type'] == "candidate":
+            # Logic for exchanging ice candidates here
+            try:
+                friend_object = User.objects.get(username=text_data_json['friendName'])
+            except Exception:
+                # if friend_object was not found
+                # assigned to friend_object account with no friends and no messages
+                # so that django wont throw any errors and function returns only user's messages
+                friend_object = authenticate(username="no_friends_object", password="qwerty1@3")
+            
+            # Getting correct room based on friend and user account
+            rooms = FriendRoom.ReturnCorrectRoom(self.scope["user"].id, friend_object.id)
+            # print(rooms[0].name)
+            async_to_sync(self.channel_layer.group_send)(
+                # Sending message to correct group based on chatroom name
+                rooms[0].name,
+                {
+                    'type': 'candidate',
+                    'message': text_data_json['message'],
+                    'chatroom': rooms[0].name,
+                    'friend': self.scope["user"].username
+                }
+            )
+        elif text_data_json['type'] == "answer":
+            # Logic for exchanging ice candidates here
+            try:
+                friend_object = User.objects.get(username=text_data_json['friendName'])
+            except Exception:
+                # if friend_object was not found
+                # assigned to friend_object account with no friends and no messages
+                # so that django wont throw any errors and function returns only user's messages
+                friend_object = authenticate(username="no_friends_object", password="qwerty1@3")
+            
+            # Getting correct room based on friend and user account
+            rooms = FriendRoom.ReturnCorrectRoom(self.scope["user"].id, friend_object.id)
+            # print(rooms[0].name)
+            async_to_sync(self.channel_layer.group_send)(
+                # Sending message to correct group based on chatroom name
+                rooms[0].name,
+                {
+                    'type': 'answer',
+                    'message': text_data_json['message'],
+                    'chatroom': rooms[0].name,
+                    'friend': self.scope["user"].username
+                }
+            )   
+        elif text_data_json['type'] == 'end_call':
+            # Logic for exchanging ice candidates here
+            try:
+                friend_object = User.objects.get(username=text_data_json['friendName'])
+            except Exception:
+                # if friend_object was not found
+                # assigned to friend_object account with no friends and no messages
+                # so that django wont throw any errors and function returns only user's messages
+                friend_object = authenticate(username="no_friends_object", password="qwerty1@3")
+            
+            # Getting correct room based on friend and user account
+            rooms = FriendRoom.ReturnCorrectRoom(self.scope["user"].id, friend_object.id)
+            # print(rooms[0].name)
+            async_to_sync(self.channel_layer.group_send)(
+                # Sending message to correct group based on chatroom name
+                rooms[0].name,
+                {
+                    'type': 'end_call',
+                    'message': text_data_json['message'],
+                    'chatroom': rooms[0].name,
+                    'friend': self.scope["user"].username
+                }
+            )
+
     
     def chat_update(self, event):
         message = event['message']
@@ -104,6 +198,68 @@ class ChatConsumer(WebsocketConsumer):
             'friend': friend
         }))
 
+    # Handler message for type 'init_call'
+    def init_call(self, event):
+        message = event['message']
+        chatroom = event['chatroom']
+        friend = event['friend']
+
+        self.send(text_data=json.dumps({
+            'type':'init_call',
+            'message':message,
+            'chatroom': chatroom,
+            'friend': friend
+        }))
+
+    # Handler message for type 'candidate'
+    def candidate(self, event):
+        message = event['message']
+        chatroom = event['chatroom']
+        friend = event['friend']
+
+        self.send(text_data=json.dumps({
+            'type':'candidate',
+            'message':message,
+            'chatroom': chatroom,
+            'friend': friend
+        }))
+    
+    # Handler message for type 'answer'
+    def answer(self, event):
+        message = event['message']
+        chatroom = event['chatroom']
+        friend = event['friend']
+
+        self.send(text_data=json.dumps({
+            'type':'answer',
+            'message':message,
+            'chatroom': chatroom,
+            'friend': friend
+        }))
+
+    # Handler message for type 'end_call'
+    def end_call(self, event):
+        message = event['message']
+        chatroom = event['chatroom']
+        friend = event['friend']
+
+        self.send(text_data=json.dumps({
+            'type':'end_call',
+            'message':message,
+            'chatroom': chatroom,
+            'friend': friend
+        }))
+
+    def call_friend_request(self, friendName):
+        channel_layer = get_channel_layer()
+        # Getting friend object
+        friend_object = User.objects.get(username=friendName)
+
+        # Connecting to friend (object) group 
+        async_to_sync(channel_layer.group_add)(
+            f"{friend_object.username}{friend_object.id}", 
+            self.channel_name
+        )
 
     # Sending FriendRequest to Friend Channels
     def send_friend_request(self, friendName):

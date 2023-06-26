@@ -66,7 +66,7 @@ def getFriendList(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getRoomMessages(request, friendName):
+def getRoomMessages(request, friendName, count, date, mode = 1):
     # user = authenticate(username="Snaczek", password="qwerty1@3") ~~ debuging stuff
     user = request.user
     try:
@@ -78,8 +78,18 @@ def getRoomMessages(request, friendName):
         friend_object = authenticate(username="no_friends_object", password="qwerty1@3")
     # Getting correct room based on friend and user account
     rooms = FriendRoom.ReturnCorrectRoom(user.id, friend_object.id)
-    # Getting all messages from that room
-    rooms_messages = Message.objects.filter(room__id__in = rooms).order_by("created")
+
+    # mode 3: getting messages older than date sorted from oldest to newest
+    # mode 2: getting newer messages than date
+    # mode 1: getting newset messages based on count sorted from oldest to newest 
+    
+    if mode == 3:
+        rooms_messages = reversed(Message.objects.filter(room__id__in = rooms).filter(created__lt = date).order_by("-created")[:count])
+    elif mode == 2:
+        rooms_messages = reversed(Message.objects.filter(room__id__in = rooms).filter(created__gt = date).order_by("-created")[:count])
+    elif mode == 1:
+        rooms_messages = reversed(Message.objects.filter(room__id__in = rooms).order_by("-created")[:count])
+
     
     # serializer = FriendRoomSerialiazer(rooms, many=True) ~~ debuging stuff
     # Serialazing all messages into json format

@@ -10,7 +10,7 @@ urlpatterns = [
     path('', views.getRoutes),
     path('messages/<str:username>', views.getMessages),
     path('friends/', views.getFriendList),
-    path('rooms/<str:friendName>', views.getRoomMessages),
+    path('rooms/<str:friendName>/<int:count>/<str:date>/<int:mode>', views.getRoomMessages),
     path('rooms/send/<str:friendName>', views.sendMessage),
     path('friendrequest/getUsers/<str:username>', views.getUser),
     path('friendrequest/getFriendRequest', views.getFriendRequest),

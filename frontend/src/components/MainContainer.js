@@ -6,6 +6,7 @@ import FriendRequestListContainer from './FriendRequestListContainer'
 import { Routes, Route } from 'react-router-dom'
 
 const MainContainer = () => {
+  
   return (
     <div className='main_container'>
       <Routes>

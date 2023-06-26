@@ -187,7 +187,7 @@ a
     width: 80%;
 }
 
-.message_container ul  
+.message_list
 {
     height: 85vh;
     overflow:hidden; 
@@ -312,4 +312,130 @@ a
 {
     background-color: #36393e;
     height: 100vh;
+}
+
+.ConControls
+{
+    background-color: #36393e;
+    margin-top: 0;
+    padding: 10px;
+    width: 98.77%;
+    overflow: hidden;
+    height: auto;
+    /* display: flex; */
+}
+
+.main_uivideo_con
+{
+    background-color: #36393e;
+    margin-top: 0;
+    padding: 10px;
+    width: 98.77%;
+    overflow: hidden;
+    height: auto;
+}
+
+#ConControls-friendname
+{
+    
+    font-size: xx-large;
+    float: left;
+}
+
+#ConControls-Call-icon img
+{
+    float: right;
+    margin-right: 1rem;
+    width: 3rem;
+}
+
+.video_container
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 17em;
+    justify-content: space-between;
+}
+
+.video-player
+{
+    background-color: black;
+    width: 100%;
+}
+
+#user-1
+{
+    visibility: hidden;
+    height: 0px;
+    width: 100%;
+}
+
+#user-2
+{
+    visibility: hidden;
+    height: 0px;
+    width: 100%;
+    float: right;
+}
+
+#uiNav
+{
+    width: 100%;
+}
+
+.control-container
+{
+   background-color: rgb(102, 153, 255, .8);
+   margin: 10px;
+   padding: 20px;
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+}
+
+.control-container img
+{
+    height: 30px;
+    width: 30px;
+}
+
+#leave_btn
+{
+    background-color: rgb(255, 80, 80);
+}
+
+.visible 
+{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+}
+  
+.hidden *
+{
+    display: none;
+}
+
+#call_request
+{
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#call_request_controls
+{
+    display: flex;
+    align-items: flex-end;
+    float: right;
+}
+
+#call_request_text
+{
+    text-align: center;
+    font-size: 2rem;
+    justify-content: center;
 }
