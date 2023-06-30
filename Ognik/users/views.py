@@ -3,9 +3,14 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
+from django.middleware import csrf
+
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import AccessToken
 
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.hashers import make_password
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -13,7 +18,7 @@ from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 
 from .serializers import MessageSerializer, FriendListSerialiazer, FriendRoomSerialiazer, UserSerializer, FriendRequestSerialiazer
-from .models import FriendRoom, Message, FriendRequest
+from .models import FriendRoom, Message, FriendRequest, File
 from django.db.models import QuerySet
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -55,6 +60,28 @@ def getMessages(request, username):
     serializer = MessageSerializer(messages, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+@csrf_exempt
+def registerUser(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    email = request.POST.get('email')
+
+    if not username or not password or not email:
+            return JsonResponse({'error': 'Invalid request'})
+    
+    if User.objects.filter(username=username).exists():
+            print("dziala")
+            return JsonResponse({'error': 'Username already exists'})
+    
+    new_user = User(
+        username=username,
+        email=email,
+        password=make_password(password)
+    )
+    new_user.save()
+
+    return JsonResponse({'success': 'User registered successfully'})
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -115,6 +142,63 @@ def sendMessage(request, friendName):
     message = Message(user = user, room = rooms, body = request.data)
     message.save()
     return HttpResponse("it did work")
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def uploadFile(request, friendName):
+    user = request.user
+    # print(request.data)
+    # serializer = FileUploadSerializer(request.data)
+    try:
+        friend_object = User.objects.get(username=friendName)
+    except Exception:
+        return HttpResponse("user doesn't exist")
+    try:
+        rooms = FriendRoom.objects.filter(users__id = user.id).filter(users__id = friend_object.id).get()
+    except Exception:
+        return HttpResponse("Room doesn't exist")
+    
+    # print(request.FILES['file'])
+    # Creating file object in Database
+    file = File(user = user, room = rooms, file = request.FILES['file'], fileName = request.FILES['file'])
+    file.save()
+
+    # Creating message object that contains file refrence
+    message = Message(user = user, room = rooms, body = "empty", file = file, isIncludeFile = True)
+    message.save()
+    
+
+    return HttpResponse("it did work")
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def downloadFile(request, file_id, token):
+    # Getting file object
+    file = get_object_or_404(File, id=file_id)
+    # Getting user object based on AccesToken 
+    try:
+        access_token_obj = AccessToken(token)
+    except Exception:
+        return HttpResponse("Acces Denied")
+    user_id = access_token_obj['user_id']
+    user = User.objects.get(id=user_id)
+    # Getting all rooms that user is in
+    users_rooms = FriendRoom.objects.filter(users__id = user.id)
+
+    # Checks if user has acces to specific file (based on if file was sent in user's chatroom)
+    if file.room in users_rooms:
+        # Build the response with the file data
+        response = HttpResponse(file.file, content_type='application/octet-stream')
+        response['Content-Disposition'] = f'attachment; filename="{file.file.name}"'
+        return response
+    else:
+        return HttpResponse("Acces Denied")
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getCsrfToken(request):
+    csrf_token = csrf.get_token(request)
+    return JsonResponse({'csrfToken': csrf_token})
 
 @api_view(['GET'])
 def getUser(request, username):

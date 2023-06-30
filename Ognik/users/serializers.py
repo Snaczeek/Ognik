@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer 
 from rest_framework import serializers 
-from .models import Message, FriendList, FriendRoom, FriendRequest
+from .models import Message, FriendList, FriendRoom, FriendRequest, File
 from django.contrib.auth.models import User
 
 class UserSerializer(ModelSerializer):
@@ -8,9 +8,14 @@ class UserSerializer(ModelSerializer):
         model = User
         fields = ["username", "id"]
 
+class FileSerializer(ModelSerializer):
+    class Meta:
+        model = File
+        fields = ["id", "fileName", "created"]
 
 class MessageSerializer(ModelSerializer):
     user = UserSerializer()
+    file = FileSerializer()
     class Meta:
         model = Message
         fields = '__all__'

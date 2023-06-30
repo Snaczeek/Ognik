@@ -4,7 +4,6 @@ import AuthContext from '../context/AuthContext'
 import ConControls from './ConControls';
 
 
-
 const MessageContainer = () => {
   let [messageRTC, setMessageRTC] = useState(null)
   
@@ -152,7 +151,7 @@ const MessageContainer = () => {
     }, [])
     
     let data = await respone.json()
-    // console.log(data)
+    console.log(data)
     
     // console.log(currentMessages.current)
     // console.log(currentMessages.current[`${string}`])
@@ -192,11 +191,6 @@ const MessageContainer = () => {
     e.preventDefault()
     // Sending message to websocket
     // And passing friend name from url
-    WebSocket.send(JSON.stringify({
-      'message': 'message was sent',
-      'friendName': string,
-      'type': 'message_update',
-    }))
     await fetch('http://localhost:8000/users/rooms/send/'+string, {
       method: 'POST',
       headers:{
@@ -205,9 +199,64 @@ const MessageContainer = () => {
       }, 
       body:JSON.stringify(e.target.message.value)
     })
+    WebSocket.send(JSON.stringify({
+      'message': 'message was sent',
+      'friendName': string,
+      'type': 'message_update',
+    }))
     document.getElementById('mess').value = ''
     
     getMessages(20, newestMessage.current[`${string}`].created, 2)
+  }
+
+  let getCSRFToken = async () => {
+    let response = await fetch(`http://localhost:8000/users/get-csrf-token`, {
+      method: 'GET',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authToken.access)
+      }
+    }, [])
+    let data = await response.json()
+    // console.log(data)
+    return data.csrfToken;
+  }
+
+  let uploadFile = async (e) => {
+    // Getting token as far as I know is not currently requierd
+    const csrfToken = await getCSRFToken()
+    // Getting file from html input
+    const file = e.target.files[0];
+
+    // Creating form object
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+
+    await fetch('http://localhost:8000/users/rooms/sendfile/'+string, {
+      method: 'POST',
+      headers:{
+        // 'Content-Type':'multipart/form-data',
+        'Authorization':'Bearer ' + String(authToken.access),
+        'X-CSRFToken': csrfToken
+        // 'Access-Control-Allow-Origin': 'origin-or-null / wildcard'
+      }, 
+      body: formData
+    })
+
+    document.getElementById('file_input').value = null
+
+    WebSocket.send(JSON.stringify({
+      'message': 'message was sent',
+      'friendName': string,
+      'type': 'message_update',
+    }))
+
+    getMessages(20, newestMessage.current[`${string}`].created, 2)
+  }
+
+  let downloadFile = (id) => {
+    window.open(`http://localhost:8000/users/rooms/download/${id}/${authToken.access}`, '_blank').focus()
   }
 
   function pushToStorage(value)
@@ -243,6 +292,12 @@ const MessageContainer = () => {
   //     input.focus();
   //   }, 10);
 
+  let FileLinkComponent = (message) => {
+    // console.log(message.message.file.fileName)
+    return (
+      <div className='friends_elem'><div className='inline-flex'>{message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>has sent you {message.message.file.fileName}</div></div></div>
+    )
+  }
 
   function MessageForRender()
   {
@@ -253,9 +308,7 @@ const MessageContainer = () => {
     else
     {
       return( 
-        messages.map(f => (
-          <div className='friends_elem'>{f.user.username}: {f.body}</div>
-        ))    
+        messages.map(f => f.isIncludeFile === false ? (<div className='friends_elem'>{f.user.username}: {f.body}</div>) : (<FileLinkComponent message={f}/>))
       )
     }
   }
@@ -272,6 +325,10 @@ const MessageContainer = () => {
         <div className='message_text_input'>
           <form onSubmit={sendMessage} autoComplete="off">
             <input type="text" id='mess' name="message" />
+            <label id='message_text_input-file' >
+              <input type="file" id="file_input" name="file" onChange={uploadFile}/>
+              Upload
+            </label>
             <button type="submit">Send</button>
           </form>
         </div>

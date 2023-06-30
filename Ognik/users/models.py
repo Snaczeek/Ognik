@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models import Q 
+# from django.db.models.signals import pre_delete
+# from django.conf import settings
+# from django.dispatch import receiver
+# import os
 
 # Create your models here.
 class FriendList(models.Model):
@@ -96,7 +100,28 @@ class FriendRoom(models.Model):
         room = FriendRoom.objects.filter(users__id = user).filter(users__id = friendName) # returns every room with user id, then in those filtred rooms, returns only room with friendName id
         return room
 
+class File(models.Model):
+    # Fields 
+    # Referencing user which message belongs to
+    id = models.AutoField(primary_key=True)
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Referencing room in which message was created
+    room = models.ForeignKey(FriendRoom, on_delete=models.CASCADE) 
+    created = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(upload_to='fileSystem/')
+
+    # windows max file name length is 260
+    fileName = models.TextField(max_length=300, default="noname")
+
+    # TO DO: FIX THIS SHIT BELOW
+
+    # @receiver(pre_delete, sender='users.File')
+    # def file_pre_delete_handler(sender, instance, **kwargs):
+    #     # Delete the file from the file system when deleting the File object
+    #     file_path = os.path.join(settings.MEDIA_ROOT, str(instance.file))
+    #     if os.path.isfile(file_path):
+    #         os.remove(file_path)
 
 class Message(models.Model):
     # Fields 
@@ -108,3 +133,6 @@ class Message(models.Model):
     body = models.TextField(max_length=4000)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    isIncludeFile = models.BooleanField(default=False)
+    file = models.ForeignKey(File, on_delete=models.CASCADE, blank=True, null=True)

@@ -102,9 +102,10 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
 
-    'corsheaders.middleware.CorsMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -198,11 +199,18 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allowed ips for api calling
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS  = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:8000",
 
     # React server Ports
+    "http://192.168.8.122:3000",
+    "http://localhost:3000",
+]
+
+CSRF_TRUSTED_ORIGINS = [
     "http://192.168.8.122:3000",
     "http://localhost:3000",
 ]

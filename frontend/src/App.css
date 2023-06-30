@@ -144,6 +144,10 @@ a
     color: 	#a8aeb8;
 }
 
+.inline-flex{
+    display: inline-flex;
+}
+
 .friends_elem
 {
     margin: 0.3125em 0.9375em;
@@ -161,6 +165,20 @@ a
 .friends_elem:hover
 {
     background-color: #424549;
+}
+
+.file_elem
+{
+    background-color: #1e2124;
+    margin-left: 0.4em;
+    padding: 1px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.file_elem:hover
+{
+    text-decoration: underline;
 }
 
 .main_container
@@ -184,8 +202,15 @@ a
 
 .message_text_input input
 {
-    width: 80%;
+    width: 70vw;
 }
+
+.message_text_input button
+{
+    position: relative;
+    left: -3rem;
+}
+
 
 .message_list
 {
@@ -438,4 +463,86 @@ a
     text-align: center;
     font-size: 2rem;
     justify-content: center;
+}
+
+input[type="file"]
+{
+    display: none;
+}
+
+#message_text_input-file
+{
+    border: 1px solid black;
+    position: relative;
+    display: inline-flex;
+    left: -3.1rem;
+}
+
+#message_text_input-file:hover
+{
+    background-color: rgb(74, 235, 160);
+}
+
+/* ||||||||||||||||||||||||| */
+/*      Register Page        */
+/* ||||||||||||||||||||||||| */
+
+
+#register-page
+{
+    /* background-color: aqua; */
+    background: linear-gradient(-45deg,rgb(41, 129, 156), rgb(29, 28, 28));
+    background-repeat: repeat;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    animation: animate 20s linear infinite;
+}
+
+.island-container
+{
+    background: #282b30;
+    width: 23em;
+    height: 33em;
+    position: relative;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 10px 3px rgba(11, 24, 20, 1);
+    -moz-box-shadow: 0px 0px 10px 3px rgba(11, 24, 20, 1);
+    box-shadow: 0px 0px 10px 3px rgba(11, 24, 20, 1);
+}
+
+.island-container form
+{
+    display: block;
+    text-align: center;
+    margin-top: 20%;
+    align-items: center;
+}
+
+#register-form input
+{
+    border-width: 1.3px;
+    background-color: #d9e0eb;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+#register-form label
+{
+    margin-top: 15px;
+    display: inline-block;
+    color: white;
+}
+
+#register-form button
+{
+    margin-top: 20px;
+    width: 10em;
+    font-size: large;
+    background-color: rgb(41, 129, 156);
+    border: none;
+    cursor: pointer;
 }

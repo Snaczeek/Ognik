@@ -15,6 +15,7 @@ const Header = () => {
             )}
 
         {user && <h1>Hello {user.username}</h1>}
+        <Link to="/register">Register</Link>
     </div>
   )
 }
