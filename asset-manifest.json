@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Ognik/static/css/main.10bd51c8.css",
+    "main.js": "/Ognik/static/js/main.5f65b433.js",
+    "static/media/home.png": "/Ognik/static/media/home.88393b8adea5683f52b8.png",
+    "static/media/notification.png": "/Ognik/static/media/notification.ff40b8d41e3d6825c68a.png",
+    "index.html": "/Ognik/index.html",
+    "main.10bd51c8.css.map": "/Ognik/static/css/main.10bd51c8.css.map",
+    "main.5f65b433.js.map": "/Ognik/static/js/main.5f65b433.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.10bd51c8.css",
+    "static/js/main.5f65b433.js"
+  ]
+}
