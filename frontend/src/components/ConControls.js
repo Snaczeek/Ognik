@@ -207,7 +207,7 @@ const ConControls = ({data = null, fcall}) => {
             // Debuggin stuff
             // if (data.friend == string)
             // {
-            //     console.log(data)
+                // console.log(data)
             // }
             // If data is type init_call and was send from a friend
             if (data.type == "init_call" && data.friend == string)
@@ -422,7 +422,7 @@ const ConControls = ({data = null, fcall}) => {
         // setIsVisible(false)
     }, [])
 
-    // Logic for handling incoming call
+    // Logic for handling incoming call from ws
     handleCallFromPeer(data)
     
     return (
@@ -432,8 +432,8 @@ const ConControls = ({data = null, fcall}) => {
                 <div id='ConControls-Call-icon' onClick={init_call}><img src={CallIcon} alt="call"/></div>
             </div>
             <div className='video_container' id='video_container' hidden>
-                <video class="video-player" id='user-1' autoPlay playsInline ></video>
-                <video class="video-player" id='user-2' autoPlay playsInline ></video>
+                <video className="video-player" id='user-1' autoPlay playsInline ></video>
+                <video className="video-player" id='user-2' autoPlay playsInline ></video>
             </div>
             <div className={isCalling ? 'visible' : 'hidden'} id='call_request'>
                 <div id='call_request_text'>
@@ -449,13 +449,13 @@ const ConControls = ({data = null, fcall}) => {
                 </div>
             </div>
             <div className={isVisible ? 'visible' : 'hidden'} id='call_controls'>
-                <div class="control-container" id="camera_btn" onClick={toggle_camera}>
+                <div className="control-container" id="camera_btn" onClick={toggle_camera}>
                     <img src={CameraIcon} alt='camera_btn' />
                 </div>
-                <div class="control-container" id="mic_btn" onClick={toggle_audio}>
+                <div className="control-container" id="mic_btn" onClick={toggle_audio}>
                     <img src={MicIcon} alt='microphone_btn' />
                 </div>
-                <div class="control-container" id="leave_btn" onClick={handleUserLeft}>
+                <div className="control-container" id="leave_btn" onClick={handleUserLeft}>
                     <img src={PhoneIcon} alt='leave_btn' />
                 </div>
             </div>

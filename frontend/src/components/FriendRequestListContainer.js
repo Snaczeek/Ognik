@@ -7,15 +7,16 @@ const FriendRequestListContainer = () => {
   let [friendRequest, setfriendRequest] = useState([])
   let { WebSocket, authToken} = useContext(AuthContext) 
   
-    WebSocket.onmessage = function (e) {
-        let data = JSON.parse(e.data)
-        if(data.type == "friendRequest")
-        {
-            setTimeout(() => {
-                getFriendRequest()
-              }, 100);
-        }
-    }
+    // WebSocket.onmessage = function (e) {
+    //     let data = JSON.parse(e.data)
+    //     if(data.type == "friendRequest")
+    //     {
+    //         setTimeout(() => {
+    //             getFriendRequest()
+    //           }, 100);
+    //     }
+    //     // console.log(WSdata)
+    // }
 
   let getFriendRequest = async () => {
     let response = await fetch('http://localhost:8000/users/friendrequest/getFriendRequest', {
@@ -39,6 +40,10 @@ const FriendRequestListContainer = () => {
       },
     })
     window.location.reload()
+    WebSocket.send(JSON.stringify({
+      'friendName': username,
+      'type': 'friend_request',
+  }))
   }
 
   let declineFriendRequest = async (username) => {
@@ -58,14 +63,18 @@ const FriendRequestListContainer = () => {
 
   return (
     <div className='friendrequest_container'>
-        <text>Your friend requests are here!</text>
-        {friendRequest.map(r => (
-          <div className='friend_request_containers'>
-              <p1>{r.sender["username"]}</p1>
-              <button onClick={() => acceptFriendRequest(r.sender["username"])}>Accept</button>
-              <button onClick={() => declineFriendRequest(r.sender["username"])}>Decline</button>
-          </div>
-        ))}
+        <h1>Your friend requests are here!</h1>
+        <div className='friend_request_list'>
+          {friendRequest.map(r => (
+            <div className='friend_request_elem'>
+                <p1>{r.sender["username"]}</p1>
+                <div className='friend_request_elem_buttons'>
+                  <button id="friend_request_acpt_button" onClick={() => acceptFriendRequest(r.sender["username"])}>Accept</button>
+                  <button id="friend_request_dec_button" onClick={() => declineFriendRequest(r.sender["username"])}>Decline</button>
+                </div>
+            </div>
+          ))}
+        </div>
     </div>
   )
 }

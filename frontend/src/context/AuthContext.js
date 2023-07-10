@@ -15,7 +15,6 @@ export const AuthProvider = ({children}) => {
     // decoding jwt token into useable block
     let [user, setUser] = useState(() => localStorage.getItem('authToken') ? jwt_decode(localStorage.getItem('authToken')) : null)
     
-    
     let [loading, setLoading] = useState(true)
     
     
@@ -24,8 +23,6 @@ export const AuthProvider = ({children}) => {
     
     const navigate = useNavigate()
     
-
-
     // Must be in try block 
     // Because on first load Websocket ist set to NULL so .onclose property doesn't exist 
     try{
@@ -62,11 +59,16 @@ export const AuthProvider = ({children}) => {
                 setWebSocket(new W3CWebSocket(url + "?token=" + String(data.access)))
             }
             localStorage.setItem('authToken', JSON.stringify(data))
-            navigate('/test')               
+            navigate('/test/friends')  
+            window.location.reload()             
         }
         else
         {
-            alert("Hujnia z grzybami")
+            document.getElementsByClassName('login-error-message')[0].innerHTML = 'Incorrect username or password'
+            document.getElementById("login-username").style.borderColor = "rgb(255, 80, 80)"   
+            document.getElementById("login-username").style.borderWidth = '2px' 
+            document.getElementById("login-password").style.borderColor = "rgb(255, 80, 80)"   
+            document.getElementById("login-password").style.borderWidth = '2px' 
         }
     }
     
@@ -115,7 +117,7 @@ export const AuthProvider = ({children}) => {
         authToken:authToken,
         loginUser:loginUser,
         logoutUser: logoutUser,
-        WebSocket:WebSocket
+        WebSocket:WebSocket,
     }
     
     useEffect(() => {
@@ -126,7 +128,8 @@ export const AuthProvider = ({children}) => {
         if(loading){
             updateToken()
         }
-        
+    
+
         // run updateToken() every 4 minutes
         let s4Minutes = 1000 * 60 * 4
         let interval = setInterval(() => {
@@ -138,7 +141,6 @@ export const AuthProvider = ({children}) => {
         
     }, [authToken, loading, WebSocket])
     
-
     // returnig contex data for children
     return (
         <AuthContext.Provider value={contextData}>

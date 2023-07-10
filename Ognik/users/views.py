@@ -18,7 +18,7 @@ from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 
 from .serializers import MessageSerializer, FriendListSerialiazer, FriendRoomSerialiazer, UserSerializer, FriendRequestSerialiazer
-from .models import FriendRoom, Message, FriendRequest, File
+from .models import FriendRoom, Message, FriendRequest, File, FriendList
 from django.db.models import QuerySet
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -63,23 +63,33 @@ def getMessages(request, username):
 @api_view(['POST'])
 @csrf_exempt
 def registerUser(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    email = request.POST.get('email')
+    username = request.data["username"]
+    password = request.data["password"]
+    email = request.data["email"]
 
+    if len(username) > 15:
+        return JsonResponse({'error': 'Username is too long'})
+
+    # Checking if value are not empty
     if not username or not password or not email:
             return JsonResponse({'error': 'Invalid request'})
     
     if User.objects.filter(username=username).exists():
-            print("dziala")
+            print("Username already exists")
             return JsonResponse({'error': 'Username already exists'})
     
+    # Creating user model object
     new_user = User(
         username=username,
         email=email,
         password=make_password(password)
     )
     new_user.save()
+
+    # Creating list model for user
+    print(new_user.id)
+    user_flist = FriendList(user = new_user)
+    user_flist.save()
 
     return JsonResponse({'success': 'User registered successfully'})
 
@@ -268,7 +278,11 @@ def acceptFriendRequest(request, friendName):
     friendRequest.accept()
 
     # Checking if chatroom already exist between those users
-    room = FriendRoom.objects.filter(users__id = request.user.id).filter(users__id = friend.id).get()
+    try:
+        room = FriendRoom.objects.filter(users__id = request.user.id).filter(users__id = friend.id).get()
+    except Exception:
+        room = None
+    
     if not room:
         # Creating Chatroom between users 
         friendroom = FriendRoom.objects.create(name=f"{request.user.username}_{friend.username}") 

@@ -2,7 +2,8 @@ body
 {
     margin: 0;
     padding: 0;
-    background-color: #FF8615;
+    background-color: #36393e;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a
@@ -10,14 +11,28 @@ a
     text-decoration: none;
 }
 
+
+#main-app
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* ||||||||||||||||||||||||| */
+/*      Header Page          */
+/* ||||||||||||||||||||||||| */
+
 .header
 {
     height: 3em;
-    padding: 10px 50px;
-    width: 100%;
-    background-color: white;
-
+    padding: 1em 14.125em;
+    background-color: #1e2124;
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
 }
 
 .header > *
@@ -25,11 +40,125 @@ a
     padding: 0px 10px;
 }
 
-.header > button
+.header a
+{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header  button
 {
     position: relative;
-    float: left;
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    height: 2.125em;
+    width: 6em;
+    font-size: 16px;
 }
+
+.header  button a 
+{
+    color: #1e2124;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header-login-button
+{
+    margin-left: auto;
+}
+
+@media screen and (max-width: 750px) {
+    .header  button
+    {
+        position: relative;
+        background-color: white ;
+        border: none;
+        border-radius: 10px;
+        width: 5em;
+        height: 3.125em;
+        font-size: 16px;
+    }
+
+    #header-login-button
+    {
+        margin-left: auto;
+        margin-right: 1rem;
+    }
+
+    .header 
+    {
+        padding: 1rem;
+    }
+}
+
+/* ||||||||||||||||||||||||| */
+/*      Home Page          */
+/* ||||||||||||||||||||||||| */
+#Home-page
+{
+    display: flex;
+    flex-direction: column;
+}
+
+#Home-page p 
+{
+    font-weight: 0;
+}
+
+.home-page-container-1
+{
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    background-color: #36393e;
+    padding: 1em 0px 1em 0em;
+    /* margin-left: auto; */
+}
+
+.home-page-container-1 *
+{
+    padding: 0px 6em 0px 6em;
+}
+
+.home-page-container-2
+{
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    background-color: #424549;
+    padding: 1em 0px 1em 0em;
+}
+
+.home-page-container-2 *
+{
+    padding: 0px 6em 0px 6em;
+}
+
+/* setting for phones */
+
+@media only screen and (max-width: 750px) {
+    .home-page-container-1 h1
+    {
+        padding: 0em 1em 0em 1em;
+    }
+    .home-page-container-1 p
+    {
+        padding: 0 2em 0 2em;
+    }
+    .home-page-container-2 p
+    {
+        padding: 0 2em 0 2em;
+    }
+    .home-page-container-2 h1
+    {
+        padding: 0em 1em 0em 1em;
+    }
+}
+
+/* ||||||||||||||||||||||||| */
 
 .ChannelListContainer
 {
@@ -54,6 +183,8 @@ a
 .sidebar_FriendRequestIcon-icon
 {
     padding: 10px;
+    margin: 0;
+    height: 3em;
 }
 
 .red_circle
@@ -68,6 +199,7 @@ a
     border-radius: 100%;
     background-color: hsl(0, 100%, 50%, 70%);
     text-align: center;
+
 }
 
 .sidebar_FriendRequestIcon-icon img
@@ -135,6 +267,7 @@ a
 .friends_list
 {
     width: 75%;
+    overflow-y:scroll;
 }
 
 .friends_list_title
@@ -167,6 +300,26 @@ a
     background-color: #424549;
 }
 
+.chat_elem
+{
+    margin: 0;
+    
+    height: 2em;
+    width: auto;
+    text-align: left;
+    color: 	#a8aeb8;
+    font-size: 1.1em;
+    border-radius: 7px;
+    align-self: left;
+    margin: 1em;
+    margin: 0.3em;
+}
+
+.chat_elem:hover
+{
+    background-color: #424549;
+}
+
 .file_elem
 {
     background-color: #1e2124;
@@ -187,36 +340,68 @@ a
     background-color: rgb(158, 53, 53);
 }
 
-.message_text_input
-{
-    width: 80%;
-}
 
 .message_text_input
 {
     position: fixed;
     bottom: 0;
     width: 100%;
-    padding: 10px;
+    /* padding: 10px; */
+    
+    
+}
+
+.message_text_input form
+{
+    width: 100%;
+    margin: 0%;
+    padding: 0;
 }
 
 .message_text_input input
 {
-    width: 70vw;
+    width: 85%;
+    background-color: #424549;
+    border: none;
+    height: 2em;
+    color: #d9e0eb;
+    padding-left: 1em;
 }
 
 .message_text_input button
 {
     position: relative;
     left: -3rem;
+    display: none;
+}
+
+#message_text_input-file
+{
+    border: 1px solid black;
+    position: fixed;
+    display: inline-flex;
+    margin-left: auto;
+    height: 1.75em;
+    align-items: center;
+    right: 0em;
+    background-color: #d9e0eb;
+    cursor: pointer;
+}
+
+#message_text_input-file:hover
+{
+    background-color: rgb(74, 235, 160);
 }
 
 
 .message_list
 {
-    height: 85vh;
+    height: 83vh;
     overflow:hidden; 
     overflow-y:scroll;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.3em;
 }
 
 .add_friend_div
@@ -284,6 +469,8 @@ a
     color: rgba(255, 255, 255, 0.726);
 }
 
+
+
 .friend_header_container
 {
     padding: 1em;
@@ -294,17 +481,46 @@ a
     color: #d9e0eb;
 }
 
+.friend_header_container h1
+{
+    margin-bottom: 0.5em;
+    font-size: 19px;
+}
+
+.friend_container
+{
+    display: flex;
+    flex-direction: row;
+    padding: 1.5em;
+}
+
+.friend_container:hover
+{
+    background-color: #424549;
+}
+
+.friend_container_username
+{
+    padding-left: 1em;
+    color: #a8aeb8;
+    font-size: 16px;
+    align-items: center;
+    display: flex;
+}
+
+.friend_container_UFWTP
+{
+    margin-left: auto;
+    justify-content: center;
+    align-items: center;
+}
+
 .friendadd_list
 {
     padding: 0;
     overflow-y: hidden;
     overflow-y: scroll;
     height: 70vh;
-}
-
-.friend_container p1
-{
-    padding: 20px; 
 }
 
 .friend_container hr
@@ -315,16 +531,18 @@ a
 
 .friend_container button
 {
-    float: right;
-    margin-right: 50px;
-    padding-bottom: 7px;
-    padding-top: 7px;
+    height: 3em;
+    
     background-color: rgba(55, 202, 116, 0.548);
     text-align: center;
     border-radius: 5px;
     border-color: rgba(0, 0, 0, 0);
     color: rgba(255, 255, 255, 0.726);
     transition: background-color 0.2s ease;
+    cursor: pointer;
+    margin-left: auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .friend_container button:hover
@@ -344,10 +562,13 @@ a
     background-color: #36393e;
     margin-top: 0;
     padding: 10px;
-    width: 98.77%;
+    width: auto;
     overflow: hidden;
     height: auto;
-    /* display: flex; */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 0em;
 }
 
 .main_uivideo_con
@@ -355,7 +576,7 @@ a
     background-color: #36393e;
     margin-top: 0;
     padding: 10px;
-    width: 98.77%;
+    width: auto;
     overflow: hidden;
     height: auto;
 }
@@ -365,6 +586,15 @@ a
     
     font-size: xx-large;
     float: left;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #d9e0eb  ;
+    font-weight: 300;
+}
+
+#ConControls-Call-icon
+{
+    margin-left: auto;
+    cursor: pointer;
 }
 
 #ConControls-Call-icon img
@@ -470,19 +700,6 @@ input[type="file"]
     display: none;
 }
 
-#message_text_input-file
-{
-    border: 1px solid black;
-    position: relative;
-    display: inline-flex;
-    left: -3.1rem;
-}
-
-#message_text_input-file:hover
-{
-    background-color: rgb(74, 235, 160);
-}
-
 /* ||||||||||||||||||||||||| */
 /*      Register Page        */
 /* ||||||||||||||||||||||||| */
@@ -518,31 +735,211 @@ input[type="file"]
 {
     display: block;
     text-align: center;
-    margin-top: 20%;
+    margin-top: 2em;
     align-items: center;
+}
+
+.register-form-inpur-container
+{
+    margin: 0.7em 0px 2.75em 0px;
 }
 
 #register-form input
 {
-    border-width: 1.3px;
+    border-width: 1.7px;
     background-color: #d9e0eb;
     border-radius: 6px;
-    margin-top: 5px;
+    /* margin-top: 5px; */
+    /* margin-bottom: 7px; */
+    width: 85%;
+    height: 1.6em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
 }
 
 #register-form label
 {
-    margin-top: 15px;
+    /* margin-top: 15px; */
     display: inline-block;
     color: white;
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #register-form button
 {
+    position: absolute;
     margin-top: 20px;
-    width: 10em;
+    width: 85%;
+    height: 3em;
+    margin: 1em;
     font-size: large;
     background-color: rgb(41, 129, 156);
     border: none;
     cursor: pointer;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.register-error-message
+{
+    position: absolute;
+    color: rgb(255, 80, 80);
+    font-size: 16px;
+    margin: 3px;
+    margin-left: 1.6em;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ||||||||||||||||||||||||| */
+/*      Login Page        */
+/* ||||||||||||||||||||||||| */
+
+#login-page
+{
+    background: linear-gradient(-45deg,rgb(41, 129, 156), rgb(29, 28, 28));
+    background-repeat: repeat;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+#login-form input
+{
+    border-width: 1.7px;
+    background-color: #d9e0eb;
+    border-radius: 6px;
+    width: 85%;
+    height: 1.6em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+#login-form label
+{
+    display: inline-block;
+    color: white;
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#login-form button
+{
+    position: absolute;
+    margin-top: 20px;
+    width: 85%;
+    height: 3em;
+    margin: 1em;
+    font-size: large;
+    background-color: rgb(41, 129, 156);
+    border: none;
+    cursor: pointer;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-form-input-container
+{
+    margin: 0.7em 0px 2.75em 0px;
+}
+
+.login-error-message
+{
+    position: relative;
+    color: rgb(255, 80, 80);
+    font-size: 22px;
+    margin: 3px;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#login-page-register-link
+{
+    text-align: left;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 2em;
+    color: #d9e0eb;
+}
+
+#login-reg-link
+{
+    color: rgb(41, 129, 156);
+}
+
+/* FRIEND REQUEST CONTAINER */
+.friendrequest_container h1
+{
+    margin: 0;
+    padding: 1%;
+}
+
+.friend_request_list
+{
+    /* overflow: scroll; */
+    overflow-y: scroll;
+    height: 90%;
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.friend_request_elem
+{
+    padding: 1em;
+    display: flex;
+    width: 95%;
+    align-items: center;
+    color: #a8aeb8;
+    font-weight: 500;
+}
+
+.friend_request_elem:hover
+{
+    background-color: #424549;
+}
+
+.friend_request_elem_buttons
+{
+    margin-left: auto;
+}
+
+.friend_request_elem_buttons button
+{
+    margin-left: 6px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 2em;
+    width: 5em;
+    font-weight: 600;
+}
+
+#friend_request_acpt_button
+{
+    background-color: rgba(0, 255, 106, 0.548);
+}
+
+#friend_request_dec_button
+{
+    background-color: rgb(255, 80, 80);
 }

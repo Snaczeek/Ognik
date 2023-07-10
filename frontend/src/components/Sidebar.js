@@ -14,9 +14,11 @@ export const Sidebar = () => {
     // nie wiem czemu ale nie działa 
     WebSocket.onmessage = (e) => {
         let data = JSON.parse(e.data)
+        // console.log(data)
         if(data.type === "friendRequest")
         {
             getFriendRequest()
+            window.location.reload()
         }
     }
 
@@ -29,15 +31,15 @@ export const Sidebar = () => {
           },
         })
         let data = await response.json()
-        console.log(data.length)
+        // console.log(data.length)
         if (data.length !== 0)
         {
-            console.log("Debug Show Red Dot")
+            // console.log("Debug Show Red Dot")
             document.getElementById("red_circle").removeAttribute("hidden");
         }
         else
         {
-            console.log("empty")
+            // console.log("empty")
             document.getElementById("red_circle").setAttribute("hidden", "")
         }
       }
@@ -45,6 +47,16 @@ export const Sidebar = () => {
       useEffect(() => {
         getFriendRequest()
       }, [])
+
+      let exit = async () => {
+        logoutUser()
+        // const delay = ms => new Promise(
+        //     resolve => setTimeout(resolve, ms)
+        // );
+        // await delay(1000)
+        // window.location.reload()
+        
+      }
 
     return (
         <div className="sidebar">
@@ -61,7 +73,7 @@ export const Sidebar = () => {
             </div>
             <div className="sidebar_logout-icon">
                 <div className="logout-icon_inner">
-                    <img onClick={logoutUser} src={LogoutIcon} alt="home" width={30}/>
+                    <img onClick={exit} src={LogoutIcon} alt="home" width={30}/>
                 </div>
             </div>
         </div>

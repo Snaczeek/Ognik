@@ -9,13 +9,18 @@ export default FriendContext
 
 export const FriendProvider = ({children}) => {
     let [friends, setFriends] = useState([])
-    let {authToken, WebSocket} = useContext(AuthContext)   
+    let {authToken, WebSocket} = useContext(AuthContext) 
+    let [wsdata, setWsdata] = useState()  
 
     WebSocket.onmessage = (e) => {
         let data = JSON.parse(e.data)
+        console.log(data)
+        setWsdata(data)
+        // console.log(wsdata)
         if(data.type === "friendRequest")
         {
             getFriends()
+            window.location.reload()
         }
     }
 
@@ -44,7 +49,8 @@ export const FriendProvider = ({children}) => {
     }, [])
 
     let contextData = {
-        friends:friends
+        friends:friends,
+        wsdata:wsdata
     }
 
   return (

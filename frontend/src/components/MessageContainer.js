@@ -57,7 +57,7 @@ const MessageContainer = () => {
     if (currentMessages.current[`${string}`].length == 0)
     {
       // If so, sending to django reqeust for new messages from database
-      getMessages(20, "321" ,1)
+      getMessages(40, "321" ,1)
     }
     else if(updates.includes(username))
     {
@@ -88,7 +88,9 @@ const MessageContainer = () => {
     containerRef.current.addEventListener('scroll', handleScroll);
 
     return () => {
-      containerRef.current.removeEventListener('scroll', handleScroll);
+      if (containerRef.current){
+        containerRef.current.removeEventListener('scroll', handleScroll);
+      }
     };
 
   }, [username])
@@ -111,8 +113,11 @@ const MessageContainer = () => {
     let data = JSON.parse(e.data)
     // Console logging messages for debugging
     // console.log('Data:', data)
-    // console.log(data)
-
+    // console.log(JSON.parse(e.data))
+    if(data.type === 'friendRequest' && data.friend != user.username)
+    {
+      window.location.reload()
+    }
     // If user recives chat_update prompt and is from a friend 
     // whos chatroom is open: update messages 
     if(data.type === 'chat_update' && data.friend === string){
@@ -120,7 +125,14 @@ const MessageContainer = () => {
       // 100ms delay is required, for some bizarre reasons
       // if there is no delay, getMessages() works every 3rd time
       setTimeout(() => {
-        getMessages(20, newestMessage.current[`${string}`].created, 2)
+        if (newestMessage.current[`${string}`])
+        {
+          getMessages(20, newestMessage.current[`${string}`].created, 2)
+        }
+        else
+        {
+          getMessages(10, "321" ,1)
+        }
       }, 300);
       // setMessageRTC(data)
       // isCalling(true)
@@ -151,7 +163,7 @@ const MessageContainer = () => {
     }, [])
     
     let data = await respone.json()
-    console.log(data)
+    // console.log(data)
     
     // console.log(currentMessages.current)
     // console.log(currentMessages.current[`${string}`])
@@ -206,7 +218,16 @@ const MessageContainer = () => {
     }))
     document.getElementById('mess').value = ''
     
-    getMessages(20, newestMessage.current[`${string}`].created, 2)
+    // Checking if message exist in chatroom
+    if (newestMessage.current[`${string}`])
+    {
+      getMessages(20, newestMessage.current[`${string}`].created, 2)
+    }
+    else
+    {
+      getMessages(10, "321" ,1)
+    }
+
   }
 
   let getCSRFToken = async () => {
@@ -295,7 +316,7 @@ const MessageContainer = () => {
   let FileLinkComponent = (message) => {
     // console.log(message.message.file.fileName)
     return (
-      <div className='friends_elem'><div className='inline-flex'>{message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>has sent you {message.message.file.fileName}</div></div></div>
+      <div className='chat_elem'><div className='inline-flex'>{message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>{message.message.file.fileName}</div></div></div>
     )
   }
 
@@ -308,11 +329,10 @@ const MessageContainer = () => {
     else
     {
       return( 
-        messages.map(f => f.isIncludeFile === false ? (<div className='friends_elem'>{f.user.username}: {f.body}</div>) : (<FileLinkComponent message={f}/>))
+        messages.map(f => f.isIncludeFile === false ? (<div className='chat_elem'>{f.user.username}: {f.body}</div>) : (<FileLinkComponent message={f}/>))
       )
     }
   }
-
   return (
     <div className='message_container'>
       <div className='message_container_ui'>
@@ -324,7 +344,7 @@ const MessageContainer = () => {
         </ul>
         <div className='message_text_input'>
           <form onSubmit={sendMessage} autoComplete="off">
-            <input type="text" id='mess' name="message" />
+            <input type="text" id='mess' name="message" autoFocus placeholder='type here'/>
             <label id='message_text_input-file' >
               <input type="file" id="file_input" name="file" onChange={uploadFile}/>
               Upload

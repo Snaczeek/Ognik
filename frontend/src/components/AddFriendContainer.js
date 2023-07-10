@@ -10,7 +10,7 @@ const AddFriendContainer = () => {
     // friend_search
     let getUesrs = async (e) => {
         e.preventDefault();
-        alert(document.getElementById('friend_search').value);
+        // alert(document.getElementById('friend_search').value);
         let username = document.getElementById('friend_search').value
         let response = await fetch('http://localhost:8000/users/friendrequest/getUsers/'+ username, {
             method: 'GET',
@@ -62,25 +62,24 @@ const AddFriendContainer = () => {
   return (
     <div className='friendadd_container'>
         <div className='friend_header_container'>
-            <p1>Add Friend</p1> <br/>
-            <p2>You can add friends by searching their username</p2> <br/>
+            <h1>You can add friends by searching their username</h1> <br/>
             <form onSubmit={getUesrs} className="friend_search" autoComplete="off"> 
                 <input type="text" id="friend_search" placeholder="username"/>
                 <button type="submit">Search</button>
             </form>
         </div>
-            <hr />
+            
         <ul className="friendadd_list">
-            <p1 id="friend_text">Looking for a friend?</p1>
+            {/* <p1 id="friend_text">Looking for a friend?</p1> */}
             {users.map(user => (
                 <div className="friend_container">
-                    <p1>{user.username}</p1>
+                    <text className='friend_container_username'>{user.username}</text>
                     {friends.includes(user.username) ? (
-                        <p1>You're friend with this person</p1>
+                        <text className="friend_container_UFWTP">You're friends with this person</text>
                     ): (
                         <button onClick={() => sendFriendRequest(user.username)}>Send Friend Request</button>
                     )}
-                    <hr/>
+                    
                 </div>
             ))}
         </ul>

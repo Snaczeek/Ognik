@@ -6,16 +6,17 @@ const Header = () => {
   let {user, logoutUser} = useContext(AuthContext)
   return (
     <div className='header'>
-        <Link to="/">Home</Link>
-        <Link to="/test">test</Link>
+        <Link to="/">Ognik</Link>
+        <a>About</a>
+        <a>Github</a>
         {user ? (
-          <button onClick={logoutUser}>Logout</button>
+          <div id='header-login-button'><button><Link to="/test/friends">Open ognik</Link></button></div>
           ): (
-            <Link to="/login"><button>Login</button></Link>
+            <div id='header-login-button'><Link to="/login"><button>Login</button></Link> </div>
             )}
 
-        {user && <h1>Hello {user.username}</h1>}
-        <Link to="/register">Register</Link>
+        {/* {user && <h1>Hello {user.username}</h1>} */}
+        {/* <Link to="/register">Register</Link> */}
     </div>
   )
 }

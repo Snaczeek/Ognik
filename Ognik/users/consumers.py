@@ -22,7 +22,7 @@ class ChatConsumer(WebsocketConsumer):
         # Creating Specific Group for user
         # (Used for sending data to specific user)
         async_to_sync(self.channel_layer.group_add)(
-            f"{self.user.username}{self.user.id}",
+            f"{self.user.username}",
             self.channel_name
         )
 
@@ -62,7 +62,7 @@ class ChatConsumer(WebsocketConsumer):
 
 
         # !!! Checking message type
- 
+        print("test")
         if text_data_json['type'] == "message_update":
             try:
                 friend_object = User.objects.get(username=text_data_json['friendName'])
@@ -73,9 +73,11 @@ class ChatConsumer(WebsocketConsumer):
                 friend_object = authenticate(username="no_friends_object", password="qwerty1@3")
                 print("no friend")
             
+            # print("test22")
             # Getting correct room based on friend and user account
             rooms = FriendRoom.ReturnCorrectRoom(self.scope["user"].id, friend_object.id)
             # print(rooms[0].name)
+            # print("test2233")
             async_to_sync(self.channel_layer.group_send)(
                 # Sending message to correct group based on chatroom name
                 rooms[0].name,
@@ -269,14 +271,14 @@ class ChatConsumer(WebsocketConsumer):
 
         # Connecting to friend (object) group 
         async_to_sync(channel_layer.group_add)(
-            f"{friend_object.username}{friend_object.id}", 
+            f"{friend_object.username}", 
             self.channel_name
         )
 
         # Sending prompt to a friend
         # (So that react can render prompt about friend request in real time) 
         async_to_sync(channel_layer.group_send)(
-            f"{friend_object.username}{friend_object.id}", 
+            f"{friend_object.username}", 
             
             {
                 'type': 'friendRequest_message',
@@ -285,7 +287,7 @@ class ChatConsumer(WebsocketConsumer):
         )
 
         # Disconnecting from a friend (object) group
-        async_to_sync(channel_layer.group_discard)(f"{friend_object.username}{friend_object.id}", self.channel_name)
+        async_to_sync(channel_layer.group_discard)(f"{friend_object.username}", self.channel_name)
     
     # Message Body for friend request
     def friendRequest_message(self, event):
