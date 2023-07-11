@@ -7,7 +7,7 @@ import AuthContext from '../context/AuthContext';
 const ProtectedRoute = () => {
     // getting user info
     const {user} = useContext(AuthContext)
-    return user ? <Outlet /> : <Navigate to="/" replace />
+    return user ? <Outlet /> : <Navigate to="/Ognik" replace />
 }
 
 export default ProtectedRoute

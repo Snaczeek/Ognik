@@ -59,7 +59,7 @@ export const AuthProvider = ({children}) => {
                 setWebSocket(new W3CWebSocket(url + "?token=" + String(data.access)))
             }
             localStorage.setItem('authToken', JSON.stringify(data))
-            navigate('/test/friends')  
+            navigate('/Ognik/test/friends')  
             window.location.reload()             
         }
         else

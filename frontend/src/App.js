@@ -20,11 +20,11 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            <Route element={<HomePage />} path="Ognik/"/>
-            <Route element={<LoginPage />} path="Ognik/login"/>
-            <Route element={<RegisterPage />} path="Ognik/register" />
+            <Route element={<HomePage />} path="/Ognik/"/>
+            <Route element={<LoginPage />} path="/Ognik/login"/>
+            <Route element={<RegisterPage />} path="/Ognik/register" />
             <Route element={<ProtectedRoute />}>
-              <Route path='Ognik/test/*' element={<MainApp />} />
+              <Route path='/Ognik/test/*' element={<MainApp />} />
             </Route>
           </Routes>
         </AuthProvider>
