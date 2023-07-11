@@ -300,9 +300,9 @@ class ChatConsumer(WebsocketConsumer):
 
 
     def disconnect(self, code):
-        # if self.channel_layer:
-        #     async_to_sync(self.channel_layer.group_discard)(
-        #         self.room_group_name,
-        #         self.channel_name
-        #     )
+        if self.channel_layer:
+            async_to_sync(self.channel_layer.group_discard)(
+                self.room_group_name,
+                self.channel_name
+            )
         ...
