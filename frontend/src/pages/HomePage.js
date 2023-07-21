@@ -17,7 +17,7 @@ export const HomePage = () => {
         </div>
         <div className='home-page-container-1'>
           <h1>Użyte technologie</h1>
-          <p>Aplikacja korzysta z takich technologi jak: django jako backend, django restframework, django restframework simple jwt dla autoryzacji, react js jako frontend, websocket dla komunikacji w czasie rzeczywistym, webrtc dla rozmów wideo peer to peer. Kod źródłowy można znaleźć na moim githubie LINK</p>
+          <p>Aplikacja korzysta z takich technologi jak: django jako backend, django restframework, django restframework simple jwt dla autoryzacji, react js jako frontend, websocket jako django channels dla komunikacji w czasie rzeczywistym, webrtc dla rozmów wideo peer to peer. Kod źródłowy można znaleźć na moim githubie <a href='https://github.com/Snaczeek/Ognik'>LINK</a></p>
         </div>
       </div>
     </div>

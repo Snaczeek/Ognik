@@ -117,6 +117,12 @@ a
     /* margin-left: auto; */
 }
 
+.home-page-container-1 a
+{
+    padding: 0;
+    color: #d9e0eb;
+}
+
 .home-page-container-1 *
 {
     padding: 0px 6em 0px 6em;

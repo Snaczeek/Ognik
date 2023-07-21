@@ -12,7 +12,7 @@ const AddFriendContainer = () => {
         e.preventDefault();
         // alert(document.getElementById('friend_search').value);
         let username = document.getElementById('friend_search').value
-        let response = await fetch('http://localhost:8000/users/friendrequest/getUsers/'+ username, {
+        let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/getUsers/'+ username, {
             method: 'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -36,7 +36,7 @@ const AddFriendContainer = () => {
         alert(username)
 
         //  friendrequest/sendFriendRequest/<str:friendName>
-        let response = await fetch('http://localhost:8000/users/friendrequest/sendFriendRequest/'+ username, {
+        let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/sendFriendRequest/'+ username, {
             method: 'GET',
             headers:{
                 'Content-Type':'application/json',

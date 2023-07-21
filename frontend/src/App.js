@@ -2,7 +2,7 @@ import './App.css';
 import Header from './components/Header';
 import AuthContext, { AuthProvider } from './context/AuthContext';
 
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
+import { Routes, Route, HashRouter  as Router } from 'react-router-dom'
 import ProtectedRoute from './utils/ProtectedRoute'
 
 import HomePage from './pages/HomePage';
@@ -17,14 +17,14 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
+      <Router >
         <AuthProvider>
           <Routes>
-            <Route element={<HomePage />} path="/Ognik/"/>
-            <Route element={<LoginPage />} path="/Ognik/login"/>
-            <Route element={<RegisterPage />} path="/Ognik/register" />
+            <Route element={<HomePage />} path="/"/>
+            <Route element={<LoginPage />} path="/login"/>
+            <Route element={<RegisterPage />} path="/register" />
             <Route element={<ProtectedRoute />}>
-              <Route path='/Ognik/test/*' element={<MainApp />} />
+              <Route path='/test/*' element={<MainApp />} />
             </Route>
           </Routes>
         </AuthProvider>

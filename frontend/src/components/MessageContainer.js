@@ -154,7 +154,7 @@ const MessageContainer = () => {
   }
   // Getting messages form django backend
   let getMessages = async (count = 1, date = "1987-07-18T20:59:26.076557Z", mode = 1, mode2 = 1) => {
-    let respone = await fetch(`http://localhost:8000/users/rooms/${string}/${count}/${date}/${mode}`, {
+    let respone = await fetch(`https://ognik-backend.duckdns.org/users/rooms/${string}/${count}/${date}/${mode}`, {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -203,7 +203,7 @@ const MessageContainer = () => {
     e.preventDefault()
     // Sending message to websocket
     // And passing friend name from url
-    await fetch('http://localhost:8000/users/rooms/send/'+string, {
+    await fetch('https://ognik-backend.duckdns.org/users/rooms/send/'+string, {
       method: 'POST',
       headers:{
         'Content-Type':'application/json',
@@ -231,7 +231,7 @@ const MessageContainer = () => {
   }
 
   let getCSRFToken = async () => {
-    let response = await fetch(`http://localhost:8000/users/get-csrf-token`, {
+    let response = await fetch(`https://ognik-backend.duckdns.org/users/get-csrf-token`, {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -254,7 +254,7 @@ const MessageContainer = () => {
     formData.append('file', file);
     formData.append('csrfmiddlewaretoken', csrfToken);
 
-    await fetch('http://localhost:8000/users/rooms/sendfile/'+string, {
+    await fetch('https://ognik-backend.duckdns.org/users/rooms/sendfile/'+string, {
       method: 'POST',
       headers:{
         // 'Content-Type':'multipart/form-data',
@@ -277,7 +277,7 @@ const MessageContainer = () => {
   }
 
   let downloadFile = (id) => {
-    window.open(`http://localhost:8000/users/rooms/download/${id}/${authToken.access}`, '_blank').focus()
+    window.open(`https://ognik-backend.duckdns.org/users/rooms/download/${id}/${authToken.access}`, '_blank').focus()
   }
 
   function pushToStorage(value)

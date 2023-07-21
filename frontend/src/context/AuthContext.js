@@ -16,9 +16,8 @@ export const AuthProvider = ({children}) => {
     let [user, setUser] = useState(() => localStorage.getItem('authToken') ? jwt_decode(localStorage.getItem('authToken')) : null)
     
     let [loading, setLoading] = useState(true)
-    
-    
-    let url = `ws://localhost:8000/ws/socket-server/`
+    // https://ognik-backend.duckdns.org/
+    let url = `wss://ognik-backend.duckdns.org/ws/socket-server/`
     let [WebSocket, setWebSocket] = useState(() => localStorage.getItem('authToken') ? new W3CWebSocket(url + "?token=" + String(authToken.access)) : null)
     
     const navigate = useNavigate()
@@ -40,7 +39,7 @@ export const AuthProvider = ({children}) => {
     let loginUser = async (e ) => {
         e.preventDefault()
         // fetching credentials to django backend
-        let response = await fetch('http://localhost:8000/users/token/', {
+        let response = await fetch('https://ognik-backend.duckdns.org/users/token/', {
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -59,7 +58,7 @@ export const AuthProvider = ({children}) => {
                 setWebSocket(new W3CWebSocket(url + "?token=" + String(data.access)))
             }
             localStorage.setItem('authToken', JSON.stringify(data))
-            navigate('/Ognik/test/friends')  
+            navigate('/test/friends')  
             window.location.reload()             
         }
         else
@@ -85,7 +84,7 @@ export const AuthProvider = ({children}) => {
     // updating access token
     let updateToken = async () => {
         // fetching refresh token to django backend
-        let response = await fetch('http://localhost:8000/users/token/refresh/', {
+        let response = await fetch('https://ognik-backend.duckdns.org/users/token/refresh/', {
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'

@@ -56,7 +56,7 @@ const RegisterPage = () => {
             return
         }
 
-        let response = await fetch('http://localhost:8000/users/register', {
+        let response = await fetch('https://ognik-backend.duckdns.org/users/register', {
             method: "POST",
             headers:{
                 'Content-Type':'application/json'

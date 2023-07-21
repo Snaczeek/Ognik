@@ -8,7 +8,7 @@ const Header = () => {
     <div className='header'>
         <Link to="/">Ognik</Link>
         <a>About</a>
-        <a>Github</a>
+        <a href='https://github.com/Snaczeek/Ognik'>Github</a>
         {user ? (
           <div id='header-login-button'><button><Link to="/test/friends">Open ognik</Link></button></div>
           ): (

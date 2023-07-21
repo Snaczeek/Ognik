@@ -25,7 +25,7 @@ export const FriendProvider = ({children}) => {
     }
 
     let getFriends = async () =>{
-        let response = await fetch('http://localhost:8000/users/friends/', {
+        let response = await fetch('https://ognik-backend.duckdns.org/users/friends/', {
             method: "GET",
             headers:{
                 'Content-Type':'application/json',

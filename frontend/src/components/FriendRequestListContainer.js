@@ -19,7 +19,7 @@ const FriendRequestListContainer = () => {
     // }
 
   let getFriendRequest = async () => {
-    let response = await fetch('http://localhost:8000/users/friendrequest/getFriendRequest', {
+    let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/getFriendRequest', {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -32,7 +32,7 @@ const FriendRequestListContainer = () => {
   }
 
   let acceptFriendRequest = async (username) => {
-    let response = await fetch('http://localhost:8000/users/friendrequest/acceptFriendRequest/' + username, {
+    let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/acceptFriendRequest/' + username, {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -47,7 +47,7 @@ const FriendRequestListContainer = () => {
   }
 
   let declineFriendRequest = async (username) => {
-    let response = await fetch('http://localhost:8000/users/friendrequest/declineFriendRequest/' + username, {
+    let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/declineFriendRequest/' + username, {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',

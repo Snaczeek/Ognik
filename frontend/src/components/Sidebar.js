@@ -23,7 +23,7 @@ export const Sidebar = () => {
     }
 
     let getFriendRequest = async () => {
-        let response = await fetch('http://localhost:8000/users/friendrequest/getFriendRequest', {
+        let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/getFriendRequest', {
           method: 'GET',
           headers:{
             'Content-Type':'application/json',

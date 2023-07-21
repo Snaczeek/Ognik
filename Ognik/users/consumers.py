@@ -3,12 +3,14 @@ from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
+
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from .models import FriendRoom
 
 from .serializers import FriendRoomSerialiazerForConsume
+
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):

@@ -40,6 +40,9 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
+def test(request):
+    return HttpResponse("Its working")
+
 # sending routes to fronted for auth token
 @api_view(['GET'])
 def getRoutes(request):
@@ -181,7 +184,7 @@ def uploadFile(request, friendName):
     return HttpResponse("it did work")
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def downloadFile(request, file_id, token):
     # Getting file object
     file = get_object_or_404(File, id=file_id)
@@ -221,7 +224,7 @@ def getUser(request, username):
     return Response(serialiazer.data)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def createFriendRequest(request, friendName):
     friend = User.objects.get(username=friendName)
     response = {}
@@ -267,7 +270,7 @@ def createFriendRequest(request, friendName):
     return Response(response)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def acceptFriendRequest(request, friendName):
     
     # Getting friend object
@@ -292,7 +295,7 @@ def acceptFriendRequest(request, friendName):
     return HttpResponse("wotk")
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def declineFriendRequest(request, friendName):
     friend = User.objects.get(username=friendName)
     friendRequest = FriendRequest.objects.get(sender__id = friend.id, receiver__id = request.user.id)

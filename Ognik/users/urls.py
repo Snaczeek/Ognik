@@ -13,6 +13,7 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('', views.getRoutes),
+    path('test', views.test),
     path('register', views.registerUser),
     path('messages/<str:username>', views.getMessages),
     path('friends/', views.getFriendList),

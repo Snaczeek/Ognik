@@ -28,14 +28,14 @@ DEBUG = True
 
 # Allowed aplication for asgi 
 # For deploment use domain
-ALLOWED_HOSTS = ["http://192.168.8.122:3000", "http://localhost:3000", "http://localhost:8000", "localhost"]
+ALLOWED_HOSTS = ["http://192.168.8.122:3000", "http://localhost:3000", "http://localhost:8000", "localhost", '0686-37-30-115-28.eu.ngrok.io', 'https://127.0.0.1:8000/', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'channels',
-
+    'sslserver',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -108,7 +108,7 @@ MIDDLEWARE = [
 
 
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -213,4 +213,14 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
     "http://192.168.8.122:3000",
     "http://localhost:3000",
+    'https://snaczeek.github.io',
+    'https://0686-37-30-115-28.eu.ngrok.io',
 ]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^https://.*\.github\.io$',
+]
+
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
