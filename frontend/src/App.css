@@ -1,3 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .header-button{
+        @apply border-solid bg-white text-black rounded-xl p-1 font-semibold w-24
+               hover:shadow-gray-500 hover:shadow-lg transition-all duration-300 hover:text-orange-400;
+    }
+
+    .login-bg{
+        @apply bg-gray-600 h-screen w-screen flex items-center justify-center;
+    }
+    .login-island{
+        @apply bg-gray-800 flex w-[40rem] h-[26em] relative justify-center p-5 shadow-black shadow-md rounded-lg;
+    }
+    .register-island{
+        @apply bg-gray-800 flex w-[40rem] h-[30em] relative justify-center p-5 shadow-black shadow-md rounded-lg;
+    }
+    .login-input{
+        @apply  w-full h-8 border-b-4 bg-gray-900 pt-5 pb-5 pl-2 pr-2 text-orange-600 border-none rounded-md
+                focus:outline-none transition-all duration-1000 focus:placeholder:text-orange-800
+                placeholder:text-zinc-500;
+    }
+    .login-text{
+        @apply text-left text-zinc-500 font-bold;
+    }
+    .login-button{
+        @apply bg-orange-700 rounded-md h-10 font-semibold transition-all duration-200 
+               hover:bg-orange-500;
+    }
+    .register-button{
+        @apply bg-orange-700 rounded-md h-10 font-semibold transition-all duration-200 absolute bottom-[1vh] right-0 left-0 w-[90%] ml-auto mr-auto mb-2
+               hover:bg-orange-500;
+    }
+    .login-error-message{
+        @apply text-2xl text-red-700;
+    }
+
+    .sidebar{
+        @apply relative w-20 top-0 left-0 h-screen flex flex-col bg-gray-900 text-white shadow-lg;
+    }
+    .sidebar-icon{
+        @apply relative flex items-center justify-center h-16 w-16 mt-2 mb-2 mx-auto bg-gray-800 text-orange-600 rounded-3xl
+               cursor-pointer hover:bg-orange-600 hover:text-white transition-all duration-200 hover:rounded-sm;
+    }
+    .sidebar-tooltip{
+        @apply absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md text-white bg-gray-900 text-xs font-bold
+               transition-all duration-100 scale-0 origin-left;
+    }
+    .red-dot{
+        @apply absolute bg-red-600 w-5 h-5 rounded-full right-0 bottom-0;
+    }
+
+    .friend-container{
+        @apply h-8 w-auto p-3 text-gray-400 text-left flex items-center text-xl m-2 rounded-sm
+               hover:bg-gray-600;
+    }
+    .add-friend-button{
+        @apply h-8 bg-green-600 text-white m-4 justify-center items-center flex rounded-md
+               hover:bg-green-400 transition-all duration-150;
+    }
+    .message_container_chat{
+        @apply border-t-2 border-gray-900 ;
+    }
+    .chat-elem{
+        @apply flex text-gray-400 h-10 p-2 text-lg w-auto items-center
+               hover:bg-gray-600;
+    }
+
+    .friend-request-elem-buttons{
+        @apply border-none cursor-pointer text-xl font-normal w-24 rounded-md ml-3 text-white p-1;
+    }
+}
+
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+        width: 7px;
+        height: 10px;
+    }
+    .scrollbar::-webkit-scrollbar-track {
+        border-radius: 100vh;
+    }
+    
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: #202225;
+        border-radius: 100vh;
+        border: 3px solid #202225;
+        display: solid;
+    }
+    
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+        display: solid;
+    }
+}
 body 
 {
     margin: 0;
@@ -17,7 +112,7 @@ a
     display: flex;
     flex-direction: column;
     width: 100%;
-}
+} 
 
 /* ||||||||||||||||||||||||| */
 /*      Header Page          */
@@ -166,19 +261,19 @@ a
 
 /* ||||||||||||||||||||||||| */
 
-.ChannelListContainer
+/* .ChannelListContainer
 {
     display: inline-flex;
     width: 18.5rem;
     background-color: #282b30;
-}
+} */
 
-.sidebar
+/* .sidebar
 {
     width: 25%;
     background-color: #1e2124;
     height: 100%;
-}
+} */
 
 /* home icon */
 .sidebar_home-icon
@@ -535,7 +630,7 @@ a
     margin-top: 30px;
 }
 
-.friend_container button
+/* .friend_container button
 {
     height: 3em;
     
@@ -549,7 +644,7 @@ a
     margin-left: auto;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .friend_container button:hover
 {
@@ -711,9 +806,8 @@ input[type="file"]
 /* ||||||||||||||||||||||||| */
 
 
-#register-page
+/* #register-page
 {
-    /* background-color: aqua; */
     background: linear-gradient(-45deg,rgb(41, 129, 156), rgb(29, 28, 28));
     background-repeat: repeat;
     width: 100%;
@@ -723,7 +817,7 @@ input[type="file"]
     height: 100vh;
     position: relative;
     animation: animate 20s linear infinite;
-}
+} */
 
 .island-container
 {
@@ -745,27 +839,24 @@ input[type="file"]
     align-items: center;
 }
 
-.register-form-inpur-container
+/* .register-form-inpur-container
 {
     margin: 0.7em 0px 2.75em 0px;
-}
-
+} */
+/* 
 #register-form input
 {
     border-width: 1.7px;
     background-color: #d9e0eb;
     border-radius: 6px;
-    /* margin-top: 5px; */
-    /* margin-bottom: 7px; */
     width: 85%;
     height: 1.6em;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
-}
+} */
 
-#register-form label
+/* #register-form label
 {
-    /* margin-top: 15px; */
     display: inline-block;
     color: white;
     font-size: 18px;
@@ -792,9 +883,9 @@ input[type="file"]
 
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
-.register-error-message
+/* .register-error-message
 {
     position: absolute;
     color: rgb(255, 80, 80);
@@ -803,7 +894,7 @@ input[type="file"]
     margin-left: 1.6em;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 /* ||||||||||||||||||||||||| */
 /*      Login Page        */
@@ -867,7 +958,7 @@ input[type="file"]
     margin: 0.7em 0px 2.75em 0px;
 }
 
-.login-error-message
+/* .login-error-message
 {
     position: relative;
     color: rgb(255, 80, 80);
@@ -875,7 +966,7 @@ input[type="file"]
     margin: 3px;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 #login-page-register-link
 {
@@ -901,7 +992,7 @@ input[type="file"]
 .friend_request_list
 {
     /* overflow: scroll; */
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     height: 90%;
     display: inline-flex;
     flex-direction: column;
@@ -940,7 +1031,7 @@ input[type="file"]
     font-weight: 600;
 }
 
-#friend_request_acpt_button
+/* #friend_request_acpt_button
 {
     background-color: rgba(0, 255, 106, 0.548);
 }
@@ -948,4 +1039,4 @@ input[type="file"]
 #friend_request_dec_button
 {
     background-color: rgb(255, 80, 80);
-}
+} */

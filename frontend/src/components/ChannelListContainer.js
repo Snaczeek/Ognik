@@ -8,7 +8,7 @@ import { Routes, Route } from 'react-router-dom'
 
 export const ChannelListContainer = () => {
   return (
-    <div className="ChannelListContainer">
+    <div className="inline-flex w-80 h-screen  bg-gray-800">
         <Sidebar />
         <Routes>
           <Route path="/friends/*" element={<FriendList />} />

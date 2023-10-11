@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import AuthContext from '../context/AuthContext'
+import configData from '../config.json'
 
 const RegisterPage = () => {
     let {loginUser} = useContext(AuthContext)
@@ -24,10 +25,10 @@ const RegisterPage = () => {
         }
 
         // Reseting error 
-        email.style.borderColor = "black"
-        nickname.style.borderColor = "black"
-        password.style.borderColor = "black"
-        confirmPassword.style.borderColor = "black"
+        email.style.borderStyle = "none"
+        nickname.style.borderStyle = "none"
+        password.style.borderStyle = "none"
+        confirmPassword.style.borderStyle = "none"
 
         emailError.innerHTML = ""
         usernameError.innerHTML = ""
@@ -41,6 +42,7 @@ const RegisterPage = () => {
         if (!regex.test(email.value))
         {
             alert("incorrect email")
+            email.style.borderStyle = "solid"
             email.style.borderColor = "red"
             emailError.innerHTML = "Incorrect email"
             return
@@ -50,13 +52,15 @@ const RegisterPage = () => {
         if (password.value != confirmPassword.value)
         {
             alert("confirm password doesn't match up")
+            password.style.borderStyle = "solid"
+            confirmPassword.style.borderStyle = "solid"
             password.style.borderColor = "red"
             confirmPassword.style.borderColor = "red"
             confirmPasswordError.innerHTML = "Passwords doesn't match"
             return
         }
 
-        let response = await fetch('https://ognik-backend.duckdns.org/users/register', {
+        let response = await fetch(configData.BACKEND_URL+'users/register', {
             method: "POST",
             headers:{
                 'Content-Type':'application/json'
@@ -69,6 +73,7 @@ const RegisterPage = () => {
         if (data.error == "Username already exists")
         {
             alert("Username is already taken")
+            nickname.style.borderStyle = "solid"
             nickname.style.borderColor = "red"
             usernameError.innerHTML = "Username is already taken"
             return
@@ -76,6 +81,7 @@ const RegisterPage = () => {
 
         if (data.error == "Username is too long")
         {
+            nickname.style.borderStyle = "solid"
             nickname.style.borderColor = "red"
             usernameError.innerHTML = "Username is to long"
             return
@@ -84,34 +90,35 @@ const RegisterPage = () => {
     }
 
   return (
-    <div id='register-page'>
-        <div className='island-container'>
-            <form onSubmit={register} autoComplete='off' id='register-form'>
-                <div className='register-form-inpur-container'>
-                    <label>E-mail</label> <br/>
-                    <input type="text" id='register-email' name='email' /> <br/>
-                    <p id='error-email-input' className='register-error-message'></p>
+    <div className='login-bg'>
+        <div className='register-island'>
+            <form onSubmit={register} autoComplete='off' id='register-form' className='flex flex-col w-full'>
+                <p className='text-center font-bold text-white text-3xl'>Register</p>
+                <div className='mb-3'>
+                    <label className='login-text'>E-mail</label> <br/>
+                    <input type="text" id='register-email' name='email' className='login-input' placeholder='e-mail'/> <br/>
+                    <p id='error-email-input' className='login-error-message'></p>
                 </div>
 
-                <div className='register-form-inpur-container'> 
-                    <label>Username</label> <br/>
-                    <input type="text" id='register-nickname' name='username' /> <br/>
-                    <p id='error-username-input' className='register-error-message'></p>
+                <div className='mb-3'> 
+                    <label className='login-text'>Username</label> <br/>
+                    <input type="text" id='register-nickname' name='username' className='login-input' placeholder='username'/> <br/>
+                    <p id='error-username-input' className='login-error-message'></p>
                 </div>
 
-                <div className='register-form-inpur-container'>
-                    <label>Password</label> <br/>
-                    <input type="password" id='register-password' name='password' /> <br/>
-                    <p id='error-password-input' className='register-error-message'></p>
+                <div className='mb-3'>
+                    <label className='login-text'>Password</label> <br/>
+                    <input type="password" id='register-password' name='password' className='login-input' placeholder='password'/> <br/>
+                    <p id='error-password-input' className='login-error-message'></p>
                 </div>
 
-                <div className='register-form-inpur-container'>
-                    <label>Confirm Password</label> <br/>
-                    <input type="password" id='confirm-register-password' name='confirmPassword' /> <br/>
-                    <p id='error-confirm-password-input' className='register-error-message'></p>
+                <div className='mb-3'>
+                    <label className='login-text'>Confirm Password</label> <br/>
+                    <input type="password" id='confirm-register-password' name='confirmPassword' className='login-input' placeholder='confirm password'/> <br/>
+                    <p id='error-confirm-password-input' className='login-error-message'></p>
                 </div>
 
-                <button>SIGN UP</button>
+                <button className='register-button'>SIGN UP</button>
             </form>   
         </div>
     </div>

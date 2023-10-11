@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext, useRef}  from 'react'
 import {  useParams } from "react-router-dom";
 import AuthContext from '../context/AuthContext'
 import ConControls from './ConControls';
-
+import configData from '../config.json'
 
 const MessageContainer = () => {
   let [messageRTC, setMessageRTC] = useState(null)
@@ -97,6 +97,7 @@ const MessageContainer = () => {
   
   WebSocket.onclose = () => {
     console.log("Websocket Client Disconnected");
+    window.location.reload()
   }
 
   WebSocket.onopen = () => {
@@ -154,7 +155,7 @@ const MessageContainer = () => {
   }
   // Getting messages form django backend
   let getMessages = async (count = 1, date = "1987-07-18T20:59:26.076557Z", mode = 1, mode2 = 1) => {
-    let respone = await fetch(`https://ognik-backend.duckdns.org/users/rooms/${string}/${count}/${date}/${mode}`, {
+    let respone = await fetch(configData.BACKEND_URL+`users/rooms/${string}/${count}/${date}/${mode}`, {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -203,7 +204,7 @@ const MessageContainer = () => {
     e.preventDefault()
     // Sending message to websocket
     // And passing friend name from url
-    await fetch('https://ognik-backend.duckdns.org/users/rooms/send/'+string, {
+    await fetch(configData.BACKEND_URL+'users/rooms/send/'+string, {
       method: 'POST',
       headers:{
         'Content-Type':'application/json',
@@ -231,7 +232,7 @@ const MessageContainer = () => {
   }
 
   let getCSRFToken = async () => {
-    let response = await fetch(`https://ognik-backend.duckdns.org/users/get-csrf-token`, {
+    let response = await fetch(configData.BACKEND_URL+`users/get-csrf-token`, {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -254,7 +255,7 @@ const MessageContainer = () => {
     formData.append('file', file);
     formData.append('csrfmiddlewaretoken', csrfToken);
 
-    await fetch('https://ognik-backend.duckdns.org/users/rooms/sendfile/'+string, {
+    await fetch(configData.BACKEND_URL+'users/rooms/sendfile/'+string, {
       method: 'POST',
       headers:{
         // 'Content-Type':'multipart/form-data',
@@ -277,7 +278,7 @@ const MessageContainer = () => {
   }
 
   let downloadFile = (id) => {
-    window.open(`https://ognik-backend.duckdns.org/users/rooms/download/${id}/${authToken.access}`, '_blank').focus()
+    window.open(configData.BACKEND_URL+`users/rooms/download/${id}/${authToken.access}`, '_blank').focus()
   }
 
   function pushToStorage(value)
@@ -316,7 +317,7 @@ const MessageContainer = () => {
   let FileLinkComponent = (message) => {
     // console.log(message.message.file.fileName)
     return (
-      <div className='chat_elem'><div className='inline-flex'>{message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>{message.message.file.fileName}</div></div></div>
+      <div className='chat-elem'><div className='inline-flex'>{message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>{message.message.file.fileName}</div></div></div>
     )
   }
 
@@ -329,7 +330,7 @@ const MessageContainer = () => {
     else
     {
       return( 
-        messages.map(f => f.isIncludeFile === false ? (<div className='chat_elem'>{f.user.username}: {f.body}</div>) : (<FileLinkComponent message={f}/>))
+        messages.map(f => f.isIncludeFile === false ? (<div className='chat-elem'>{f.user.username}: {f.body}</div>) : (<FileLinkComponent message={f}/>))
       )
     }
   }
@@ -338,8 +339,8 @@ const MessageContainer = () => {
       <div className='message_container_ui'>
         <ConControls data={messageRTC} />
       </div>
-      <div className='message_container_chat'>
-        <ul className='message_list' ref={containerRef}>
+      <div className='message_container_chat '>
+        <ul className='message_list scrollbar' ref={containerRef}>
           <MessageForRender  />
         </ul>
         <div className='message_text_input'>

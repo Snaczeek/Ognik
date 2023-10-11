@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext, Navigate} from 'react'
 import AuthContext from '../context/AuthContext'
 // import FriendContext from '../context/FriendContext'
+import configData from '../config.json'
 
 const FriendRequestListContainer = () => {
 
@@ -19,7 +20,7 @@ const FriendRequestListContainer = () => {
     // }
 
   let getFriendRequest = async () => {
-    let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/getFriendRequest', {
+    let response = await fetch(configData.BACKEND_URL+'users/friendrequest/getFriendRequest', {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -32,7 +33,7 @@ const FriendRequestListContainer = () => {
   }
 
   let acceptFriendRequest = async (username) => {
-    let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/acceptFriendRequest/' + username, {
+    let response = await fetch(configData.BACKEND_URL+'users/friendrequest/acceptFriendRequest/' + username, {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -47,7 +48,7 @@ const FriendRequestListContainer = () => {
   }
 
   let declineFriendRequest = async (username) => {
-    let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/declineFriendRequest/' + username, {
+    let response = await fetch(configData.BACKEND_URL+'users/friendrequest/declineFriendRequest/' + username, {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -63,14 +64,14 @@ const FriendRequestListContainer = () => {
 
   return (
     <div className='friendrequest_container'>
-        <h1>Your friend requests are here!</h1>
-        <div className='friend_request_list'>
+        <h1 className='text-3xl font-semibold text-gray-950'>Your friend requests are here!</h1>
+        <div className='overflow-y-scroll h-[90%] scrollbar'>
           {friendRequest.map(r => (
             <div className='friend_request_elem'>
-                <p1>{r.sender["username"]}</p1>
-                <div className='friend_request_elem_buttons'>
-                  <button id="friend_request_acpt_button" onClick={() => acceptFriendRequest(r.sender["username"])}>Accept</button>
-                  <button id="friend_request_dec_button" onClick={() => declineFriendRequest(r.sender["username"])}>Decline</button>
+                <p1 className='font-semibold'>{r.sender["username"]}</p1>
+                <div className='ml-auto flex'>
+                  <button className='friend-request-elem-buttons bg-green-600 hover:bg-green-500 transition-all duration-150' onClick={() => acceptFriendRequest(r.sender["username"])}>Accept</button>
+                  <button className='friend-request-elem-buttons bg-red-600 hover:bg-red-500 transition-all duration-150'onClick={() => declineFriendRequest(r.sender["username"])}>Decline</button>
                 </div>
             </div>
           ))}

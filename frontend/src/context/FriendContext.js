@@ -1,16 +1,16 @@
 import React from 'react'
 import { createContext, useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthContext'
-
+import configData from '../config.json'
 
 const FriendContext = createContext();
 
 export default FriendContext
 
 export const FriendProvider = ({children}) => {
-    let [friends, setFriends] = useState([])
+    let [friends, setFriends] = useState([null])
     let {authToken, WebSocket} = useContext(AuthContext) 
-    let [wsdata, setWsdata] = useState()  
+    let [wsdata, setWsdata] = useState(null)  
 
     WebSocket.onmessage = (e) => {
         let data = JSON.parse(e.data)
@@ -25,7 +25,7 @@ export const FriendProvider = ({children}) => {
     }
 
     let getFriends = async () =>{
-        let response = await fetch('https://ognik-backend.duckdns.org/users/friends/', {
+        let response = await fetch(configData.BACKEND_URL+'users/friends/', {
             method: "GET",
             headers:{
                 'Content-Type':'application/json',

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
 import FriendContext from '../context/FriendContext'
+import configData from '../config.json'
 
 const AddFriendContainer = () => {
 
@@ -12,7 +13,7 @@ const AddFriendContainer = () => {
         e.preventDefault();
         // alert(document.getElementById('friend_search').value);
         let username = document.getElementById('friend_search').value
-        let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/getUsers/'+ username, {
+        let response = await fetch(configData.BACKEND_URL+'users/friendrequest/getUsers/'+ username, {
             method: 'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -36,7 +37,7 @@ const AddFriendContainer = () => {
         alert(username)
 
         //  friendrequest/sendFriendRequest/<str:friendName>
-        let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/sendFriendRequest/'+ username, {
+        let response = await fetch(configData.BACKEND_URL+'users/friendrequest/sendFriendRequest/'+ username, {
             method: 'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -69,15 +70,15 @@ const AddFriendContainer = () => {
             </form>
         </div>
             
-        <ul className="friendadd_list">
+        <ul className="friendadd_list scrollbar">
             {/* <p1 id="friend_text">Looking for a friend?</p1> */}
             {users.map(user => (
                 <div className="friend_container">
                     <text className='friend_container_username'>{user.username}</text>
                     {friends.includes(user.username) ? (
-                        <text className="friend_container_UFWTP">You're friends with this person</text>
+                        <text className="friend_container_UFWTP text-gray-950 font-bold text-lg">You're friends with this person</text>
                     ): (
-                        <button onClick={() => sendFriendRequest(user.username)}>Send Friend Request</button>
+                        <button className='add-friend-button ml-auto h-10 w-48'onClick={() => sendFriendRequest(user.username)}>Send Friend Request</button>
                     )}
                     
                 </div>

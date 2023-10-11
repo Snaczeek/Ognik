@@ -149,7 +149,7 @@ const ConControls = ({data = null, fcall}) => {
         const delay = ms => new Promise(
             resolve => setTimeout(resolve, ms)
         );
-        await delay(200)
+        await delay(400)
 
         WebSocket.send(JSON.stringify({
             'message': offer,
@@ -176,7 +176,7 @@ const ConControls = ({data = null, fcall}) => {
         const delay = ms => new Promise(
             resolve => setTimeout(resolve, ms)
         );
-        await delay(400)
+        await delay(1000)
         WebSocket.send(JSON.stringify({
             'message': answer,
             'friendName': string,

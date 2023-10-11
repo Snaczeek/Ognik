@@ -3,6 +3,8 @@ import HomeIcon from "../assets/home.png";
 import LogoutIcon from "../assets/logout.png";
 import FriendRequestIcon from "../assets/notification.png" ;
 import AuthContext from "../context/AuthContext";
+import { AiFillFire, AiOutlineUserAdd, AiOutlineLogout } from "react-icons/ai";
+import configData from "../config.json"
 
 import { Link } from 'react-router-dom';
 
@@ -23,7 +25,7 @@ export const Sidebar = () => {
     }
 
     let getFriendRequest = async () => {
-        let response = await fetch('https://ognik-backend.duckdns.org/users/friendrequest/getFriendRequest', {
+        let response = await fetch(configData.BACKEND_URL+'users/friendrequest/getFriendRequest', {
           method: 'GET',
           headers:{
             'Content-Type':'application/json',
@@ -60,21 +62,18 @@ export const Sidebar = () => {
 
     return (
         <div className="sidebar">
-            <div className="sidebar_home-icon">
-                <div className="home-icon_inner">
-                    <Link to="./friends"><img src={HomeIcon} alt="home" /></Link>
-                </div>
+            <div className="sidebar-icon group">
+                <Link to="./friends"><AiFillFire size="48"/></Link>
+                <span className="sidebar-tooltip group-hover:scale-100">Home</span>
             </div>
-            <div className="sidebar_FriendRequestIcon-icon">
-                <div className="home-icon_inner">
-                    <Link to="./friends/friendRequestList"><img src={FriendRequestIcon} alt="friend_request"  /></Link>
-                </div>
-                <div className="red_circle" hidden id="red_circle"></div>
+            <div className="sidebar-icon group">
+                <Link to="./friends/friendRequestList"><AiOutlineUserAdd size="48"/></Link>
+                <span className="sidebar-tooltip group-hover:scale-100">Friend requests</span>
+                <div className="red-dot" hidden id="red_circle"></div>
             </div>
-            <div className="sidebar_logout-icon">
-                <div className="logout-icon_inner">
-                    <img onClick={exit} src={LogoutIcon} alt="home" width={30}/>
-                </div>
+            <div className="sidebar-icon group">
+                <AiOutlineLogout size="48" onClick={exit}/>
+                <span className="sidebar-tooltip group-hover:scale-100">Logout</span>
             </div>
         </div>
   )

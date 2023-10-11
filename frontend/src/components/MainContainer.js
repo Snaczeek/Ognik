@@ -18,7 +18,7 @@ const MainContainer = () => {
   // console.log(messageWS)
 
   return (
-    <div className='main_container'>
+    <div className='w-[85%] bg-gray-700'>
       <Routes>
         <Route path="/friends/mcon/:username" element={<MessageContainer asd={wsdata}/>} />
         <Route path="/friends/addFriend" element={<AddFriendContainer />} />
