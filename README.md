@@ -21,3 +21,9 @@ Please configure Backend URL for HTTP and Websocket in the `frontend/src/config.
 
 For the backend, please refer to the `requirements.txt` file in the `Ognik` folder. You can install the backend dependencies by running the following command:
 - pip install -r Ognik/requirements.txt
+
+# How to run
+After installing all dependecies
+- In the `frontend` folder run `npm start`
+- In the `Ognik` folder run `python manage.py runserver [specify ip and port number]`
+- Rember to configure `frontend/src/config.json` so that URL matches django server ip and port number
