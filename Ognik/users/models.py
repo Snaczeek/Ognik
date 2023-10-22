@@ -114,7 +114,7 @@ class File(models.Model):
     # windows max file name length is 260
     fileName = models.TextField(max_length=300, default="noname")
 
-    # TO DO: FIX THIS SHIT BELOW
+    # TO DO: When a message object is deleted, delete atachted file
 
     # @receiver(pre_delete, sender='users.File')
     # def file_pre_delete_handler(sender, instance, **kwargs):
