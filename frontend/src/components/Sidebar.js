@@ -1,7 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import HomeIcon from "../assets/home.png";
-import LogoutIcon from "../assets/logout.png";
-import FriendRequestIcon from "../assets/notification.png" ;
 import AuthContext from "../context/AuthContext";
 import { AiFillFire, AiOutlineUserAdd, AiOutlineLogout } from "react-icons/ai";
 import configData from "../config.json"
@@ -13,7 +10,6 @@ export const Sidebar = () => {
 
     let { WebSocket, logoutUser, authToken} = useContext(AuthContext)
 
-    // nie wiem czemu ale nie działa 
     WebSocket.onmessage = (e) => {
         let data = JSON.parse(e.data)
         // console.log(data)
