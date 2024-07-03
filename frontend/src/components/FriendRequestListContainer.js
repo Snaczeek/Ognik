@@ -63,13 +63,13 @@ const FriendRequestListContainer = () => {
   }, [])
 
   return (
-    <div className='friendrequest_container'>
-        <h1 className='text-3xl font-semibold text-gray-950'>Your friend requests are here!</h1>
-        <div className='overflow-y-scroll h-[90%] scrollbar'>
+    <div className='friendrequest_container flex-col flex-grow'>
+        <h1 className='text-3xl font-semibold text-[#d9e0eb] border-b-2 border-gray-900 p-4'>Your friend requests are here!</h1>
+        <div className='overflow-y-scroll flex-grow scrollbar'>
           {friendRequest.map(r => (
-            <div className='friend_request_elem'>
+            <div className='friend_request_elem w-full'>
                 <p1 className='font-semibold'>{r.sender["username"]}</p1>
-                <div className='ml-auto flex'>
+                <div className='ml-auto flex left-0'>
                   <button className='friend-request-elem-buttons bg-green-600 hover:bg-green-500 transition-all duration-150' onClick={() => acceptFriendRequest(r.sender["username"])}>Accept</button>
                   <button className='friend-request-elem-buttons bg-red-600 hover:bg-red-500 transition-all duration-150'onClick={() => declineFriendRequest(r.sender["username"])}>Decline</button>
                 </div>

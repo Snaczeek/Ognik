@@ -25,7 +25,7 @@ const AddFriendContainer = () => {
         console.log(Object.keys(data))
         if (Object.keys(data).length === 0){
             // console.log("worky")
-            document.getElementById("friend_text").innerHTML = "Account not found"
+            document.getElementById("friend_text").innerHTML = "Account Not Found"
         } 
         else{
             document.getElementById("friend_text").innerHTML = ""
@@ -61,17 +61,17 @@ const AddFriendContainer = () => {
 
 
   return (
-    <div className='friendadd_container'>
+    <div className='friendadd_container flex flex-col flex-grow'>
         <div className='friend_header_container'>
-            <h1>You can add friends by searching their username</h1> <br/>
-            <form onSubmit={getUesrs} className="friend_search" autoComplete="off"> 
-                <input type="text" id="friend_search" placeholder="username"/>
-                <button type="submit">Search</button>
+            <h1 className='text-3xl font-semibold'>You can add friends by searching their username</h1> <br/>
+            <form onSubmit={getUesrs} className="friend_search flex flex-grow justify-center" autoComplete="off"> 
+                <input type="text" id="friend_search" placeholder="Type username and hit enter"/>
+                {/* <button type="submit">Search</button> Ive had enough dealing with css */}
             </form>
         </div>
             
         <ul className="friendadd_list scrollbar">
-            {/* <p1 id="friend_text">Looking for a friend?</p1> */}
+            <div id="friend_text" className="text-[#d9e0eb] flex justify-center p-2 text-xl"></div>
             {users.map(user => (
                 <div className="friend_container">
                     <text className='friend_container_username'>{user.username}</text>

@@ -3,6 +3,7 @@ import {  useParams } from "react-router-dom";
 import AuthContext from '../context/AuthContext'
 import ConControls from './ConControls';
 import configData from '../config.json'
+import { MdOutlineFileUpload } from "react-icons/md";
 
 const MessageContainer = () => {
   let [messageRTC, setMessageRTC] = useState(null)
@@ -309,23 +310,21 @@ const MessageContainer = () => {
     sessionStorage.setItem("Updates", JSON.stringify(array))
   }
 
-  // setTimeout(() => {
-  //     const input = document.getElementById("mess");
-  //     input.focus();
-  //   }, 10);
-
   let FileLinkComponent = (message) => {
-    // console.log(message.message.file.fileName)
     return (
-      <div className='chat-elem'><div className='inline-flex'>{message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>{message.message.file.fileName}</div></div></div>
+      <div className='chat-elem'>
+        <div className='inline-flex'>
+          {message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>{message.message.file.fileName}</div>
+        </div>
+      </div>
     )
   }
 
   function MessageForRender()
   {
-    if (messages === null)
+    if (messages.length == 0)
     {
-      return <h1>No Messages</h1>
+      return <div className='chat-no-msg'>No Messages with @{username}</div>
     }
     else
     {
@@ -335,22 +334,21 @@ const MessageContainer = () => {
     }
   }
   return (
-    <div className='message_container'>
+    <div className='message_container flex flex-col flex-grow'>
       <div className='message_container_ui'>
         <ConControls data={messageRTC} />
       </div>
       <div className='message_container_chat '>
         <ul className='message_list scrollbar' ref={containerRef}>
-          <MessageForRender  />
+          <MessageForRender />
         </ul>
         <div className='message_text_input'>
           <form onSubmit={sendMessage} autoComplete="off">
             <input type="text" id='mess' name="message" autoFocus placeholder='type here'/>
             <label id='message_text_input-file' >
               <input type="file" id="file_input" name="file" onChange={uploadFile}/>
-              Upload
+              <MdOutlineFileUpload />               
             </label>
-            <button type="submit">Send</button>
           </form>
         </div>
       </div>

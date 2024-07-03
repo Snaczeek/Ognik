@@ -61,7 +61,7 @@
                hover:bg-green-400 transition-all duration-150;
     }
     .message_container_chat{
-        @apply border-t-2 border-gray-900 ;
+        @apply border-t-2 border-gray-900 flex flex-col flex-grow min-h-0;
     }
     .chat-elem{
         @apply flex text-gray-400 h-10 p-2 text-lg w-auto items-center
@@ -70,6 +70,10 @@
 
     .friend-request-elem-buttons{
         @apply border-none cursor-pointer text-xl font-normal w-24 rounded-md ml-3 text-white p-1;
+    }
+    
+    .friend_header_container{
+        @apply p-4 text-[#d9e0eb] border-b-2 border-gray-900;
     }
 }
 
@@ -92,6 +96,10 @@
     .scrollbar::-webkit-scrollbar-thumb:hover {
         display: solid;
     }
+}
+
+.message_container{
+    height: 100%;
 }
 body 
 {
@@ -401,6 +409,13 @@ a
     background-color: #424549;
 }
 
+.chat-no-msg
+{
+    text-align: center;
+    color: 	#a8aeb8;
+    padding: 1em;
+}
+
 .chat_elem
 {
     margin: 0;
@@ -444,54 +459,59 @@ a
 
 .message_text_input
 {
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
-    /* padding: 10px; */
-    
-    
+    padding: 0px;
+    display: flex;
+    justify-content: center;
 }
 
 .message_text_input form
 {
     width: 100%;
     margin: 0%;
-    padding: 0;
+    padding: 0%;
+    display: flex;
+    justify-content: center;
 }
 
 .message_text_input input
 {
-    width: 85%;
+    width: 98%;
     background-color: #424549;
     border: none;
-    height: 2em;
+    height: 2.5em;
     color: #d9e0eb;
     padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 0.5em;
 }
 
-.message_text_input button
+.message_text_input input:focus
 {
-    position: relative;
-    left: -3rem;
-    display: none;
+    outline: none;
 }
 
 #message_text_input-file
 {
-    border: 1px solid black;
-    position: fixed;
+    position: absolute;
     display: inline-flex;
     margin-left: auto;
-    height: 1.75em;
-    align-items: center;
-    right: 0em;
+    height: 1.7em;
+    width: 1.7em;
     background-color: #d9e0eb;
     cursor: pointer;
+    border-radius: 100%;
+    right: 1.5%;
+    top: 16%;
+    justify-content: center;
+    align-items: center;
 }
 
 #message_text_input-file:hover
 {
-    background-color: rgb(74, 235, 160);
+    @apply bg-orange-500 transition-all duration-200;
 }
 
 
@@ -545,11 +565,12 @@ a
     border-radius: 5px;
     border-width: 1px;
     border-color: black;
-    width: 40em;
-    height: 30px;
+    width: 100%;
+    height: 2em;
     color: white;
     text-align: left;
-    padding-right: 150px;
+    padding-left: 0.5em;
+    padding-right: 5em;
 }
 
 .friend_search input[type=text]:focus
@@ -562,17 +583,21 @@ a
 
 .friend_search button
 {
-    margin-left: -70px;
     background-color: rgba(55, 202, 116, 0.548);
     text-align: center;
     border-radius: 5px;
     border-color: rgba(0, 0, 0, 0);
     color: rgba(255, 255, 255, 0.726);
+    position: absolute;
+    margin-left: auto;
+    justify-content: right;
+    right: 2%;
+    top: 8%;
 }
 
 
 
-.friend_header_container
+/* .friend_header_container
 {
     padding: 1em;
 }
@@ -586,7 +611,7 @@ a
 {
     margin-bottom: 0.5em;
     font-size: 19px;
-}
+} */
 
 .friend_container
 {
@@ -621,7 +646,6 @@ a
     padding: 0;
     overflow-y: hidden;
     overflow-y: scroll;
-    height: 70vh;
 }
 
 .friend_container hr
@@ -656,6 +680,7 @@ a
 {
     background-color: #36393e;
     height: 100vh;
+    display: flex;
 }
 
 .ConControls
@@ -986,7 +1011,7 @@ input[type="file"]
 .friendrequest_container h1
 {
     margin: 0;
-    padding: 1%;
+    /* padding: 1%; */
 }
 
 .friend_request_list
@@ -1003,7 +1028,6 @@ input[type="file"]
 {
     padding: 1em;
     display: flex;
-    width: 95%;
     align-items: center;
     color: #a8aeb8;
     font-weight: 500;
