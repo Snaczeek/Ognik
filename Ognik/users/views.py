@@ -17,11 +17,11 @@ from django.contrib.auth import authenticate
 
 from django.shortcuts import get_object_or_404
 
-from .serializers import MessageSerializer, FriendListSerialiazer, FriendRoomSerialiazer, UserSerializer, FriendRequestSerialiazer
+from .serializers import MessageSerializer, FriendListSerialiazer, FriendRoomSerialiazer, UserSerializer, FriendRequestSerialiazer, FileSerializer
 from .models import FriendRoom, Message, FriendRequest, File, FriendList
 from django.db.models import QuerySet
 
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 # Custom encryptions settings for token
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/customizing_token_claims.html
@@ -160,22 +160,29 @@ def sendMessage(request, friendName):
 @permission_classes([IsAuthenticated])
 def uploadFile(request, friendName):
     user = request.user
-    # print(request.data)
-    # serializer = FileUploadSerializer(request.data)
+    # Validate request data
+    serializer = FileSerializer(data = request.data)
+    if not serializer.is_valid():
+        return JsonResponse(serializer.errors, status=400)
+    
     try:
         friend_object = User.objects.get(username=friendName)
-    except Exception:
-        return HttpResponse("user doesn't exist")
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User doesn't exist"}, status = 404)
+    
     try:
         rooms = FriendRoom.objects.filter(users__id = user.id).filter(users__id = friend_object.id).get()
-    except Exception:
-        return HttpResponse("Room doesn't exist")
+    except FriendRoom.DoesNotExist:
+        return JsonResponse({"error": "Chat room doesn't exist"}, status = 404)
     
-    # print(request.FILES['file'])
     # Creating file object in Database
     file = File(user = user, room = rooms, file = request.FILES['file'], fileName = request.FILES['file'])
-    file.save()
-
+    
+    try:
+        file.clean() # Enforcing file size limit (It should be never call, unless file serializer fails)
+        file.save()
+    except ValidationError as e:
+        return JsonResponse({"error" : str(e)}, status = 400)
     # Creating message object that contains file refrence
     message = Message(user = user, room = rooms, body = "empty", file = file, isIncludeFile = True)
     message.save()
@@ -184,10 +191,14 @@ def uploadFile(request, friendName):
     return HttpResponse("it did work")
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def downloadFile(request, file_id, token):
     # Getting file object
     file = get_object_or_404(File, id=file_id)
+
+    # Checking if file exist in storage
+    if not file.isFileExists():
+        return HttpResponse("File doesn't exist")
     # Getting user object based on AccesToken 
     try:
         access_token_obj = AccessToken(token)

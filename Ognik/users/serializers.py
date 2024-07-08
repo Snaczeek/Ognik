@@ -9,9 +9,19 @@ class UserSerializer(ModelSerializer):
         fields = ["username", "id"]
 
 class FileSerializer(ModelSerializer):
+    fileSize = serializers.SerializerMethodField()
+    
     class Meta:
         model = File
-        fields = ["id", "fileName", "created"]
+        fields = ["id", "fileName", "created", "file", "fileSize"]
+    
+    def get_fileSize(self, obj):
+        return obj.file.size
+
+    def validate_file(self, value):
+        if value.size > 8 * 1024 * 1024: # 8 MB limit
+            raise serializers.ValidationError("File size must be less than 8 MB")
+        return value
 
 class MessageSerializer(ModelSerializer):
     user = UserSerializer()

@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, useRef}  from 'react'
 import {  useParams } from "react-router-dom";
 import AuthContext from '../context/AuthContext'
 import ConControls from './ConControls';
+import ConTest from './ConTest'
 import configData from '../config.json'
 import { MdOutlineFileUpload } from "react-icons/md";
 
@@ -256,26 +257,38 @@ const MessageContainer = () => {
     formData.append('file', file);
     formData.append('csrfmiddlewaretoken', csrfToken);
 
-    await fetch(configData.BACKEND_URL+'users/rooms/sendfile/'+string, {
-      method: 'POST',
-      headers:{
-        // 'Content-Type':'multipart/form-data',
-        'Authorization':'Bearer ' + String(authToken.access),
-        'X-CSRFToken': csrfToken
-        // 'Access-Control-Allow-Origin': 'origin-or-null / wildcard'
-      }, 
-      body: formData
-    })
-
-    document.getElementById('file_input').value = null
-
-    WebSocket.send(JSON.stringify({
-      'message': 'message was sent',
-      'friendName': string,
-      'type': 'message_update',
-    }))
-
-    getMessages(20, newestMessage.current[`${string}`].created, 2)
+    try{
+      let response = await fetch(configData.BACKEND_URL+'users/rooms/sendfile/'+string, {
+        method: 'POST',
+        headers:{
+          // 'Content-Type':'multipart/form-data',
+          'Authorization':'Bearer ' + String(authToken.access),
+          'X-CSRFToken': csrfToken
+          // 'Access-Control-Allow-Origin': 'origin-or-null / wildcard'
+        }, 
+        body: formData
+      })
+  
+      document.getElementById('file_input').value = null
+  
+      if (!response.ok) {
+        // Parse the JSON error message
+        let errorData = await response.json();
+        let errorMessage = errorData.error || "An error occurred";
+        throw new Error(errorMessage);
+      }
+  
+      WebSocket.send(JSON.stringify({
+        'message': 'message was sent',
+        'friendName': string,
+        'type': 'message_update',
+      }))
+  
+      getMessages(20, newestMessage.current[`${string}`].created, 2)
+    } catch (error){
+      console.error("Upload failed:", error.message);
+      alert("Upload failed: " + error.message);
+    }
   }
 
   let downloadFile = (id) => {
@@ -314,11 +327,21 @@ const MessageContainer = () => {
     return (
       <div className='chat-elem'>
         <div className='inline-flex'>
-          {message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>{message.message.file.fileName}</div>
+          {message.message.user.username}: <div className='file_elem' onClick={() => downloadFile(message.message.file.id) }>{message.message.file.fileName} {formatFileSize(message.message.file.fileSize)}</div>
         </div>
       </div>
     )
   }
+
+  const formatFileSize = (size) => {
+    if (size < 1024) {
+        return size + ' B';
+    } else if (size < 1024 * 1024) {
+        return (size / 1024).toFixed(2) + ' KB';
+    } else {
+        return (size / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+};
 
   function MessageForRender()
   {
@@ -336,7 +359,8 @@ const MessageContainer = () => {
   return (
     <div className='message_container flex flex-col flex-grow'>
       <div className='message_container_ui'>
-        <ConControls data={messageRTC} />
+        {/* <ConControls data={messageRTC} /> */}
+        <ConTest data={messageRTC}/>
       </div>
       <div className='message_container_chat '>
         <ul className='message_list scrollbar' ref={containerRef}>

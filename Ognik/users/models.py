@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models import Q 
+from django.core.exceptions import ValidationError
 # from django.db.models.signals import pre_delete
 # from django.conf import settings
 # from django.dispatch import receiver
@@ -112,7 +113,15 @@ class File(models.Model):
     file = models.FileField(upload_to='fileSystem/')
 
     # windows max file name length is 260
-    fileName = models.TextField(max_length=300, default="noname")
+    fileName = models.TextField(max_length=259, default="noname")
+
+    def isFileExists(self) -> bool:
+        return self.file.storage.exists(self.file.name)
+    
+    def clean(self):
+        super().clean()
+        if self.file.size > 8 * 1024 * 1024: # 8 MB limit
+            raise ValidationError("File size should be less than 8 MB")
 
     # TO DO: When a message object is deleted, delete atachted file
 
