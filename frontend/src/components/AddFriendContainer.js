@@ -66,7 +66,7 @@ const AddFriendContainer = () => {
             <h1 className='text-3xl font-semibold'>You can add friends by searching their username</h1> <br/>
             <form onSubmit={getUesrs} className="friend_search flex flex-grow justify-center" autoComplete="off"> 
                 <input type="text" id="friend_search" placeholder="Type username and hit enter"/>
-                {/* <button type="submit">Search</button> Ive had enough dealing with css */}
+                {/* <button type="submit">Search</button> */}
             </form>
         </div>
             
