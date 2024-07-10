@@ -352,7 +352,7 @@ const MessageContainer = () => {
     else
     {
       return( 
-        messages.map(f => f.isIncludeFile === false ? (<div className='chat-elem'>{f.user.username}: {f.body}</div>) : (<FileLinkComponent message={f}/>))
+        messages.map(f => f.isIncludeFile === false ? (<div className='chat-elem' key={f.id}>{f.user.username}: {f.body}</div>) : (<FileLinkComponent message={f}/>))
       )
     }
   }
