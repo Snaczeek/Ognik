@@ -1,4 +1,4 @@
 {
-    "BACKEND_URL": "https://ognik-backend.duckdns.org:8001/",
-    "WS_URL": "wss://.ognik-backend.duckdns.org:8001/"
+    "BACKEND_URL": "https://new-ognik-backend.duckdns.org/",
+    "WS_URL": "wss://new-ognik-backend.duckdns.org/"
 }
