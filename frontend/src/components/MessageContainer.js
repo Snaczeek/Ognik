@@ -99,7 +99,7 @@ const MessageContainer = () => {
   
   WebSocket.onclose = () => {
     console.log("Websocket Client Disconnected");
-    window.location.reload()
+    // window.location.reload()
   }
 
   WebSocket.onopen = () => {
