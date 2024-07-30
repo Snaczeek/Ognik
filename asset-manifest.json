@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Ognik/static/css/main.db718309.css",
-    "main.js": "/Ognik/static/js/main.b92768f3.js",
+    "main.css": "/Ognik/static/css/main.bee9b895.css",
+    "main.js": "/Ognik/static/js/main.8d4588de.js",
     "index.html": "/Ognik/index.html",
-    "main.db718309.css.map": "/Ognik/static/css/main.db718309.css.map",
-    "main.b92768f3.js.map": "/Ognik/static/js/main.b92768f3.js.map"
+    "main.bee9b895.css.map": "/Ognik/static/css/main.bee9b895.css.map",
+    "main.8d4588de.js.map": "/Ognik/static/js/main.8d4588de.js.map"
   },
   "entrypoints": [
-    "static/css/main.db718309.css",
-    "static/js/main.b92768f3.js"
+    "static/css/main.bee9b895.css",
+    "static/js/main.8d4588de.js"
   ]
 }
