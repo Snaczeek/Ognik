@@ -27,3 +27,6 @@ After installing all dependecies
 - In the `frontend` folder run `npm start`
 - In the `Ognik` folder run `python manage.py runserver [specify ip and port number]`
 - Rember to configure `frontend/src/config.json` so that URL matches django server ip and port number
+
+## Performance
+[Benchmarks](./Benchmarks/BENCHMARKS.md)
