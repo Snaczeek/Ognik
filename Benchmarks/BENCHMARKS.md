@@ -10,7 +10,7 @@ I ran the test from my local machine, fetching data from a backend hosted on Azu
 - **Results**:
   - Requests/sec: 120
   - Average Latency: 79ms
-  - Simulated Users: 200 (with <5% failure rate)
+  - Simulated Users: 200 (with 0% failure rate)
 - **Screenshots**:
   - [![hosted_results_s1](./screenshots/s1.png)](./screenshots/s1.png) 
   - [![hosted_results_s2](./screenshots/s2.png)](./screenshots/s2.png) 
